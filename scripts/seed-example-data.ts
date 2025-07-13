@@ -1,6 +1,6 @@
 async function seed() {
   // Dynamically import supabaseAdmin for ESM compatibility
-  const { supabaseAdmin } = await import("../src/lib/supabase/server.ts");
+  const { supabaseAdmin } = await import("../src/lib/supabase/server");
 
   // Example projects
   const projects = [

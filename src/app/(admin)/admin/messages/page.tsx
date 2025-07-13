@@ -31,7 +31,7 @@ import {
   softDeleteMessage,
   restoreMessage,
 } from "@/lib/data";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 interface Message {
   id: string;
@@ -58,11 +58,7 @@ export default function AdminMessagesPage() {
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
 
-  useEffect(() => {
-    fetchMessages();
-  }, [currentPage, search, readFilter, deletedFilter, dateFrom, dateTo]);
-
-  const fetchMessages = async () => {
+  const fetchMessages = useCallback(async () => {
     setLoading(true);
     try {
       const result = await getContactMessages({
@@ -82,7 +78,11 @@ export default function AdminMessagesPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentPage, search, readFilter, deletedFilter, dateFrom, dateTo, limit]);
+
+  useEffect(() => {
+    fetchMessages();
+  }, [fetchMessages]);
 
   const handleReadToggle = async (id: string, read: boolean) => {
     await fetch("/api/mark-message-read", {

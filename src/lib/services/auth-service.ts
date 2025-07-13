@@ -227,7 +227,10 @@ export class AuthService {
       return false;
     }
 
-    return data.user_roles?.name === "admin";
+    return (
+      Array.isArray(data.user_roles) &&
+      data.user_roles.some((role) => role.name === "admin")
+    );
   }
 
   // Get user permissions

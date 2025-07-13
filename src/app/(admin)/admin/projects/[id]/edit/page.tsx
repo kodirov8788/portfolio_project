@@ -1,36 +1,47 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { supabase } from "@/lib/supabase/client";
+
+interface Category {
+  id: string;
+  name: string;
+}
+
+interface ProjectFormData {
+  title: string;
+  description: string;
+  image_url: string;
+  github_url: string;
+  live_url: string;
+  featured: boolean;
+  technologies: string[];
+  category_id: string | null;
+}
 
 export default function EditProjectPage() {
   const router = useRouter();
   const params = useParams();
-  const id = params?.id;
-  const [formData, setFormData] = useState({
+  const id = params?.id as string;
+  const [formData, setFormData] = useState<ProjectFormData>({
     title: "",
     description: "",
     image_url: "",
     github_url: "",
     live_url: "",
     featured: false,
-    technologies: [] as string[],
+    technologies: [],
     category_id: null,
   });
-  const [categories, setCategories] = useState<any[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  useEffect(() => {
+  const fetchProject = useCallback(async () => {
     if (!id) return;
-    fetchProject();
-    fetchCategories();
-  }, [id]);
-
-  const fetchProject = async () => {
     setLoading(true);
     const { data, error } = await supabase
       .from("projects")
@@ -40,17 +51,27 @@ export default function EditProjectPage() {
     if (error) setError(error.message);
     else setFormData({ ...data, technologies: data.technologies || [] });
     setLoading(false);
-  };
+  }, [id]);
 
-  const fetchCategories = async () => {
+  const fetchCategories = useCallback(async () => {
     const { data, error } = await supabase
       .from("project_categories")
       .select("id, name");
     if (!error) setCategories(data || []);
-  };
+  }, []);
 
-  const handleChange = (e: any) => {
-    const { name, value, type, checked } = e.target;
+  useEffect(() => {
+    fetchProject();
+    fetchCategories();
+  }, [fetchProject, fetchCategories]);
+
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { name, value, type } = e.target;
+    const checked = (e.target as HTMLInputElement).checked;
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
@@ -80,7 +101,7 @@ export default function EditProjectPage() {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
     setError("");

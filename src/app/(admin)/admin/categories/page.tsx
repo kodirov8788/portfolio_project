@@ -3,113 +3,121 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase/client";
 
+interface Category {
+  id: string;
+  name: string;
+  description: string;
+  color: string;
+  created_at: string;
+}
+
 export default function AdminProjectCategoriesPage() {
-  const [categories, setCategories] = useState<any[]>([]);
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [color, setColor] = useState("#3b82f6");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-  // Remove slug state and input field
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [newCategory, setNewCategory] = useState({
+    name: "",
+    description: "",
+    color: "#3B82F6",
+  });
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchCategories();
   }, []);
 
   const fetchCategories = async () => {
-    setLoading(true);
     const { data, error } = await supabase
       .from("project_categories")
-      .select("id, name, description, color")
-      .order("name", { ascending: true });
-    if (error) setError(error.message);
+      .select("*")
+      .order("name");
+    if (error) console.error("Error fetching categories:", error);
     else setCategories(data || []);
+  };
+
+  const addCategory = async () => {
+    if (!newCategory.name.trim()) return;
+    setLoading(true);
+    const { error } = await supabase
+      .from("project_categories")
+      .insert([newCategory]);
+    if (error) console.error("Error adding category:", error);
+    else {
+      setNewCategory({ name: "", description: "", color: "#3B82F6" });
+      fetchCategories();
+    }
     setLoading(false);
   };
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    setError("");
-    setSuccess("");
-    const { error } = await supabase
-      .from("project_categories")
-      .insert([{ name, description, color }]);
-    if (error) setError(error.message);
-    else {
-      setSuccess("Category added!");
-      setName("");
-      setDescription("");
-      setColor("#3b82f6");
-      fetchCategories();
-    }
-  };
-
   return (
-    <main className="max-w-2xl mx-auto py-10 px-4">
+    <div className="max-w-4xl mx-auto p-6">
       <h1 className="text-2xl font-bold mb-6">Project Categories</h1>
-      <form onSubmit={handleSubmit} className="space-y-4 mb-8">
-        <div>
-          <label className="block font-medium mb-1">Name</label>
+
+      <div className="bg-white rounded-lg shadow p-6 mb-6">
+        <h2 className="text-lg font-semibold mb-4">Add New Category</h2>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <input
-            className="w-full border rounded px-3 py-2"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
+            type="text"
+            placeholder="Category name"
+            value={newCategory.name}
+            onChange={(e) =>
+              setNewCategory({ ...newCategory, name: e.target.value })
+            }
+            className="border rounded px-3 py-2"
           />
-        </div>
-        {/* Slug field removed */}
-        <div>
-          <label className="block font-medium mb-1">Description</label>
-          <textarea
-            className="w-full border rounded px-3 py-2"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            rows={2}
+          <input
+            type="text"
+            placeholder="Description"
+            value={newCategory.description}
+            onChange={(e) =>
+              setNewCategory({ ...newCategory, description: e.target.value })
+            }
+            className="border rounded px-3 py-2"
           />
-        </div>
-        <div>
-          <label className="block font-medium mb-1">Color</label>
           <input
             type="color"
-            value={color}
-            onChange={(e) => setColor(e.target.value)}
-            className="w-16 h-10 p-0 border-none"
+            value={newCategory.color}
+            onChange={(e) =>
+              setNewCategory({ ...newCategory, color: e.target.value })
+            }
+            className="border rounded px-3 py-2 h-10"
           />
+          <button
+            onClick={addCategory}
+            disabled={loading}
+            className="bg-blue-600 text-white px-4 py-2 rounded disabled:opacity-50"
+          >
+            {loading ? "Adding..." : "Add Category"}
+          </button>
         </div>
-        <button
-          type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded"
-        >
-          Add Category
-        </button>
-        {error && <div className="text-red-500 mt-2">{error}</div>}
-        {success && <div className="text-green-600 mt-2">{success}</div>}
-      </form>
-      <div>
+      </div>
+
+      <div className="bg-white rounded-lg shadow p-6">
         <h2 className="text-lg font-semibold mb-2">All Categories</h2>
-        {loading ? (
-          <div>Loading...</div>
-        ) : categories.length === 0 ? (
+        {categories.length === 0 ? (
           <div className="text-gray-500">No categories found.</div>
         ) : (
-          <ul className="space-y-2">
+          <div className="space-y-2">
             {categories.map((cat) => (
-              <li
+              <div
                 key={cat.id}
-                className="flex items-center space-x-3 p-2 border rounded"
+                className="flex items-center justify-between p-3 border rounded"
               >
-                <span
-                  className="inline-block w-4 h-4 rounded-full"
-                  style={{ backgroundColor: cat.color }}
-                />
-                <span className="font-medium">{cat.name}</span>
-                <span className="text-gray-500 text-sm">{cat.description}</span>
-              </li>
+                <div className="flex items-center space-x-3">
+                  <div
+                    className="w-4 h-4 rounded"
+                    style={{ backgroundColor: cat.color }}
+                  ></div>
+                  <span className="font-medium">{cat.name}</span>
+                  {cat.description && (
+                    <span className="text-gray-500 text-sm">
+                      {cat.description}
+                    </span>
+                  )}
+                </div>
+              </div>
             ))}
-          </ul>
+          </div>
         )}
       </div>
-    </main>
+    </div>
   );
 }

@@ -33,7 +33,7 @@ interface BlogPost {
 export default function EditBlogPostPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const [blogPost, setBlogPost] = useState<BlogPost | null>(null);
   const [title, setTitle] = useState("");
@@ -49,40 +49,41 @@ export default function EditBlogPostPage({
   const router = useRouter();
 
   useEffect(() => {
-    fetchBlogPost();
-  }, [params.id]);
+    const loadBlogPost = async () => {
+      const resolvedParams = await params;
+      try {
+        const { data, error } = await supabase
+          .from("blog_posts")
+          .select("*")
+          .eq("id", resolvedParams.id)
+          .single();
 
-  const fetchBlogPost = async () => {
-    try {
-      const { data, error } = await supabase
-        .from("blog_posts")
-        .select("*")
-        .eq("id", params.id)
-        .single();
+        if (error) {
+          console.error("Error fetching blog post:", error);
+          setError("Failed to load blog post");
+          setFetching(false);
+          return;
+        }
 
-      if (error) {
-        console.error("Error fetching blog post:", error);
-        setError("Failed to load blog post");
+        if (data) {
+          setBlogPost(data);
+          setTitle(data.title || "");
+          setSlug(data.slug || "");
+          setExcerpt(data.excerpt || "");
+          setContent(data.content || "");
+          setStatus(data.status || "draft");
+          setFeatured(data.featured || false);
+        }
+      } catch (error) {
+        console.error("Unexpected error:", error);
+        setError("An unexpected error occurred");
+      } finally {
         setFetching(false);
-        return;
       }
+    };
 
-      if (data) {
-        setBlogPost(data);
-        setTitle(data.title || "");
-        setSlug(data.slug || "");
-        setExcerpt(data.excerpt || "");
-        setContent(data.content || "");
-        setStatus(data.status || "draft");
-        setFeatured(data.featured || false);
-      }
-    } catch (error) {
-      console.error("Unexpected error:", error);
-      setError("An unexpected error occurred");
-    } finally {
-      setFetching(false);
-    }
-  };
+    loadBlogPost();
+  }, [params]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -91,7 +92,16 @@ export default function EditBlogPostPage({
     setSuccess("");
 
     try {
-      const updateData: any = {
+      const updateData: {
+        title: string;
+        slug: string;
+        excerpt: string;
+        content: string;
+        status: string;
+        featured: boolean;
+        updated_at: string;
+        published_at?: string;
+      } = {
         title,
         slug,
         excerpt,
@@ -109,7 +119,7 @@ export default function EditBlogPostPage({
       const { error } = await supabase
         .from("blog_posts")
         .update(updateData)
-        .eq("id", params.id);
+        .eq("id", blogPost?.id);
 
       if (error) {
         console.error("Error updating blog post:", error);

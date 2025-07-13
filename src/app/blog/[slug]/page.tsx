@@ -3,14 +3,15 @@ import { notFound } from "next/navigation";
 import { format } from "date-fns";
 
 interface BlogPostProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export default async function BlogPostPage({ params }: BlogPostProps) {
+  const { slug } = await params;
   const { data, error } = await supabaseAdmin
     .from("blog_posts")
     .select("id, title, excerpt, content, published_at")
-    .eq("slug", params.slug)
+    .eq("slug", slug)
     .eq("status", "published")
     .single();
 

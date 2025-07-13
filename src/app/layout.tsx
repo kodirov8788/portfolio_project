@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navigation } from "@/components/ui/navigation";
 import { supabase } from "@/lib/supabase/client";
 import { AuthProvider } from "@/contexts/auth-context";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -121,12 +122,12 @@ export default function RootLayout({
                         </a>
                       </li>
                       <li>
-                        <a
+                        <Link
                           href="/blog"
                           className="text-sm text-gray-600 hover:text-gray-900"
                         >
                           Blog
-                        </a>
+                        </Link>
                       </li>
                       <li>
                         <a
