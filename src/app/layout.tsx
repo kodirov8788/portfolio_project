@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Navigation } from "@/components/ui/navigation";
-import { supabase } from "@/lib/supabase/client";
+import { createClient } from "@/lib/supabase/client";
 import { AuthProvider } from "@/contexts/auth-context";
 import Link from "next/link";
 
@@ -65,6 +65,7 @@ export default function RootLayout({
       "[GLOBAL] SUPABASE_SERVICE_ROLE_KEY:",
       process.env.SUPABASE_SERVICE_ROLE_KEY
     );
+    const supabase = createClient();
     supabase
       .from("user_profiles")
       .select("*")

@@ -1,30 +1,33 @@
-import { supabaseAdmin } from "@/lib/supabase/server";
-import { UserProfile } from "@/types/database";
+import { createClient } from "@/lib/supabase/server";
 
 export default async function AdminUsersPage() {
-  const { data, error } = await supabaseAdmin
+  const supabase = await createClient();
+  const { data: users, error } = await supabase
     .from("user_profiles")
-    .select("id, full_name, email, username, created_at")
+    .select("*")
     .order("created_at", { ascending: false });
-  const users = (data || []) as UserProfile[];
+
+  if (error) {
+    console.error("Error fetching users:", error);
+    return <div className="text-red-500">Error loading users</div>;
+  }
 
   return (
     <main className="max-w-3xl mx-auto py-10 px-4">
       <h1 className="text-2xl font-bold mb-6">Users</h1>
-      {error && <div className="text-red-500 mb-4">{error.message}</div>}
       <div className="overflow-x-auto">
         <table className="min-w-full border">
           <thead>
-            <tr className="bg-gray-100">
-              <th className="px-4 py-2 text-left">Full Name</th>
+            <tr className="bg-gray-50">
+              <th className="px-4 py-2 text-left">Name</th>
               <th className="px-4 py-2 text-left">Email</th>
               <th className="px-4 py-2 text-left">Username</th>
-              <th className="px-4 py-2 text-left">Created At</th>
+              <th className="px-4 py-2 text-left">Created</th>
             </tr>
           </thead>
           <tbody>
             {users && users.length > 0 ? (
-              users.map((user: UserProfile) => (
+              users.map((user) => (
                 <tr key={user.id} className="border-t">
                   <td className="px-4 py-2">{user.full_name || "-"}</td>
                   <td className="px-4 py-2">{user.email}</td>
@@ -38,8 +41,8 @@ export default async function AdminUsersPage() {
               ))
             ) : (
               <tr>
-                <td colSpan={4} className="px-4 py-6 text-center text-gray-500">
-                  No users found.
+                <td colSpan={4} className="px-4 py-2 text-center text-gray-500">
+                  No users found
                 </td>
               </tr>
             )}

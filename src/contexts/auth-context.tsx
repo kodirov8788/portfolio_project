@@ -7,8 +7,8 @@ import {
   useState,
   ReactNode,
 } from "react";
-import { supabase } from "@/lib/supabase/client";
-import { User, Session } from "@supabase/supabase-js";
+import { createClient } from "@/lib/supabase/client";
+import { User, Session, AuthChangeEvent } from "@supabase/supabase-js";
 
 interface AuthContextType {
   user: User | null;
@@ -28,6 +28,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     // Get initial session
     const getInitialSession = async () => {
+      const supabase = createClient();
       const {
         data: { session },
       } = await supabase.auth.getSession();
@@ -39,19 +40,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     getInitialSession();
 
     // Listen for auth changes
+    const supabase = createClient();
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (event, session) => {
-      console.log("Auth state changed:", event, session?.user?.email);
-      setSession(session);
-      setUser(session?.user ?? null);
-      setIsLoading(false);
-    });
+    } = supabase.auth.onAuthStateChange(
+      async (event: AuthChangeEvent, session: Session | null) => {
+        console.log("Auth state changed:", event, session?.user?.email);
+        setSession(session);
+        setUser(session?.user ?? null);
+        setIsLoading(false);
+      }
+    );
 
     return () => subscription.unsubscribe();
   }, []);
 
   const signOut = async () => {
+    const supabase = createClient();
     await supabase.auth.signOut();
   };
 

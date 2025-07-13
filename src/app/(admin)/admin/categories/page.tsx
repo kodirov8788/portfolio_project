@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { supabase } from "@/lib/supabase/client";
+import { createClient } from "@/lib/supabase/client";
 
 interface Category {
   id: string;
@@ -25,6 +25,7 @@ export default function AdminProjectCategoriesPage() {
   }, []);
 
   const fetchCategories = async () => {
+    const supabase = createClient();
     const { data, error } = await supabase
       .from("project_categories")
       .select("*")
@@ -36,6 +37,7 @@ export default function AdminProjectCategoriesPage() {
   const addCategory = async () => {
     if (!newCategory.name.trim()) return;
     setLoading(true);
+    const supabase = createClient();
     const { error } = await supabase
       .from("project_categories")
       .insert([newCategory]);

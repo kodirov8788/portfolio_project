@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { supabase } from "@/lib/supabase/client";
+import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
@@ -52,6 +52,7 @@ export default function EditBlogPostPage({
     const loadBlogPost = async () => {
       const resolvedParams = await params;
       try {
+        const supabase = createClient();
         const { data, error } = await supabase
           .from("blog_posts")
           .select("*")
@@ -92,6 +93,7 @@ export default function EditBlogPostPage({
     setSuccess("");
 
     try {
+      const supabase = createClient();
       const updateData: {
         title: string;
         slug: string;

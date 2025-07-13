@@ -1,32 +1,37 @@
-import { supabaseAdmin } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import { format } from "date-fns";
 
-interface BlogPostProps {
+export default async function BlogPostPage({
+  params,
+}: {
   params: Promise<{ slug: string }>;
-}
-
-export default async function BlogPostPage({ params }: BlogPostProps) {
+}) {
   const { slug } = await params;
-  const { data, error } = await supabaseAdmin
+  const supabase = await createClient();
+
+  const { data: post, error } = await supabase
     .from("blog_posts")
-    .select("id, title, excerpt, content, published_at")
+    .select("*")
     .eq("slug", slug)
     .eq("status", "published")
     .single();
 
-  if (error || !data) return notFound();
+  if (error || !post) {
+    notFound();
+  }
 
   return (
-    <main className="max-w-2xl mx-auto py-10 px-4">
-      <h1 className="text-3xl font-bold mb-2">{data.title}</h1>
-      {data.excerpt && <p className="text-gray-500 mb-4">{data.excerpt}</p>}
-      {data.published_at && (
-        <div className="text-sm text-gray-400 mb-6">
-          {format(new Date(data.published_at), "MMMM d, yyyy")}
-        </div>
-      )}
-      <article className="prose prose-neutral">{data.content}</article>
-    </main>
+    <article className="max-w-4xl mx-auto px-4 py-8">
+      <header className="mb-8">
+        <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
+        <p className="text-gray-600 mb-4">{post.excerpt}</p>
+        <time className="text-sm text-gray-500">
+          {post.published_at &&
+            format(new Date(post.published_at), "MMMM d, yyyy")}
+        </time>
+      </header>
+      <div className="prose max-w-none">{post.content}</div>
+    </article>
   );
 }

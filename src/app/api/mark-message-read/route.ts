@@ -1,28 +1,18 @@
+import { createClient } from "@/lib/supabase/client";
 import { NextRequest, NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase/client";
 
 export async function POST(request: NextRequest) {
   try {
-    const { id, read } = await request.json();
-
-    if (!id) {
-      return NextResponse.json(
-        { error: "Message ID is required" },
-        { status: 400 }
-      );
-    }
+    const { messageId } = await request.json();
+    const supabase = createClient();
 
     const { error } = await supabase
       .from("contact_messages")
-      .update({ read })
-      .eq("id", id);
+      .update({ read: true, read_at: new Date().toISOString() })
+      .eq("id", messageId);
 
     if (error) {
-      console.error("Error updating message read status:", error);
-      return NextResponse.json(
-        { error: "Failed to update message status" },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
     return NextResponse.json({ success: true });

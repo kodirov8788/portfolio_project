@@ -1,11 +1,35 @@
-import { supabaseAdmin } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 
 export default async function AdminAnalyticsPage() {
-  const { data: events, error } = await supabaseAdmin
+  const supabase = await createClient();
+  const { data: events, error } = await supabase
     .from("analytics_events")
     .select("id, event_type, entity_type, entity_id, user_id, created_at")
     .order("created_at", { ascending: false })
-    .limit(50);
+    .limit(100);
+
+  if (error) {
+    console.error("Error fetching analytics events:", error);
+  }
+
+  // Process events for display
+  const processedEvents =
+    events?.map(
+      (event: {
+        id: string;
+        event_type: string;
+        entity_type: string;
+        entity_id: string;
+        user_id: string;
+        created_at: string;
+      }) => ({
+        id: event.id,
+        type: event.event_type,
+        entity: `${event.entity_type}:${event.entity_id}`,
+        userId: event.user_id,
+        date: new Date(event.created_at).toLocaleDateString(),
+      })
+    ) || [];
 
   return (
     <main className="max-w-4xl mx-auto py-10 px-4">
@@ -23,18 +47,13 @@ export default async function AdminAnalyticsPage() {
             </tr>
           </thead>
           <tbody>
-            {events && events.length > 0 ? (
-              events.map((event) => (
+            {processedEvents && processedEvents.length > 0 ? (
+              processedEvents.map((event) => (
                 <tr key={event.id} className="border-t">
-                  <td className="px-4 py-2">{event.event_type}</td>
-                  <td className="px-4 py-2">{event.entity_type || "-"}</td>
-                  <td className="px-4 py-2">{event.entity_id || "-"}</td>
-                  <td className="px-4 py-2">{event.user_id || "-"}</td>
-                  <td className="px-4 py-2">
-                    {event.created_at
-                      ? new Date(event.created_at).toLocaleString()
-                      : "-"}
-                  </td>
+                  <td className="px-4 py-2">{event.type}</td>
+                  <td className="px-4 py-2">{event.entity}</td>
+                  <td className="px-4 py-2">{event.userId || "-"}</td>
+                  <td className="px-4 py-2">{event.date}</td>
                 </tr>
               ))
             ) : (

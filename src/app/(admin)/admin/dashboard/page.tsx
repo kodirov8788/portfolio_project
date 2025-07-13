@@ -21,7 +21,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useAuth } from "@/contexts/auth-context";
-import { supabase } from "@/lib/supabase/client";
+import { createClient } from "@/lib/supabase/client";
 
 interface DashboardStats {
   totalProjects: number;
@@ -57,17 +57,17 @@ export default function AdminDashboardPage() {
         // Fetch stats
         const [projectsResult, blogPostsResult, messagesResult, unreadResult] =
           await Promise.all([
-            supabase
+            createClient()
               .from("projects")
               .select("*", { count: "exact", head: true }),
-            supabase
+            createClient()
               .from("blog_posts")
               .select("*", { count: "exact", head: true }),
-            supabase
+            createClient()
               .from("contact_messages")
               .select("*", { count: "exact", head: true })
               .eq("deleted", false),
-            supabase
+            createClient()
               .from("contact_messages")
               .select("*")
               .eq("read", false)
@@ -82,7 +82,7 @@ export default function AdminDashboardPage() {
         });
 
         // Fetch recent messages
-        const { data: messages } = await supabase
+        const { data: messages } = await createClient()
           .from("contact_messages")
           .select("*")
           .eq("deleted", false)

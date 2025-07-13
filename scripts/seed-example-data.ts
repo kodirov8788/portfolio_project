@@ -1,6 +1,7 @@
 async function seed() {
-  // Dynamically import supabaseAdmin for ESM compatibility
-  const { supabaseAdmin } = await import("../src/lib/supabase/server");
+  // Dynamically import createClient for ESM compatibility
+  const { createClient } = await import("../src/lib/supabase/server");
+  const supabase = await createClient();
 
   // Example projects
   const projects = [
@@ -52,7 +53,7 @@ async function seed() {
   ];
 
   // Insert projects
-  const { error: projectError } = await supabaseAdmin
+  const { error: projectError } = await supabase
     .from("projects")
     .insert(projects);
   if (projectError) {
@@ -62,7 +63,7 @@ async function seed() {
   }
 
   // Insert blog posts
-  const { error: blogError } = await supabaseAdmin
+  const { error: blogError } = await supabase
     .from("blog_posts")
     .insert(blogPosts);
   if (blogError) {

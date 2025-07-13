@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { supabase } from "@/lib/supabase/client";
+import { createClient } from "@/lib/supabase/client";
+import { AuthChangeEvent, Session } from "@supabase/supabase-js";
 
 export default function LoginPage() {
   const [isConfigError, setIsConfigError] = useState(false);
@@ -34,33 +35,35 @@ export default function LoginPage() {
     }
     setIsInitialized(true);
 
-    console.log("supabase:=>", supabase);
-
     // Add Supabase auth state change logging
-    const { data } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log("Supabase Auth Event:", event, session);
+    const supabase = createClient();
+    console.log("supabase:=>", supabase);
+    const { data } = supabase.auth.onAuthStateChange(
+      (event: AuthChangeEvent, session: Session | null) => {
+        console.log("Supabase Auth Event:", event, session);
 
-      if (event === "SIGNED_IN") {
-        setAuthStatus({
-          type: "success",
-          message: "Login successful! Redirecting to dashboard...",
-        });
-        // Redirect after a short delay to show the success message
-        setTimeout(() => {
-          window.location.href = "/admin/dashboard";
-        }, 2000);
-      } else if (event === "SIGNED_OUT") {
-        setAuthStatus({
-          type: "idle",
-          message: "",
-        });
-      } else if (event === "TOKEN_REFRESHED") {
-        setAuthStatus({
-          type: "success",
-          message: "Session refreshed successfully!",
-        });
+        if (event === "SIGNED_IN") {
+          setAuthStatus({
+            type: "success",
+            message: "Login successful! Redirecting to dashboard...",
+          });
+          // Redirect after a short delay to show the success message
+          setTimeout(() => {
+            window.location.href = "/admin/dashboard";
+          }, 2000);
+        } else if (event === "SIGNED_OUT") {
+          setAuthStatus({
+            type: "idle",
+            message: "",
+          });
+        } else if (event === "TOKEN_REFRESHED") {
+          setAuthStatus({
+            type: "success",
+            message: "Session refreshed successfully!",
+          });
+        }
       }
-    });
+    );
 
     return () => {
       data?.subscription?.unsubscribe();
@@ -94,6 +97,7 @@ export default function LoginPage() {
     try {
       console.log("Attempting login with:", formData.email);
 
+      const supabase = createClient();
       const { data, error } = await supabase.auth.signInWithPassword({
         email: formData.email,
         password: formData.password,

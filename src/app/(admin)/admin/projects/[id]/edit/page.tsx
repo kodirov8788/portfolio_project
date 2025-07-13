@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { supabase } from "@/lib/supabase/client";
+import { createClient } from "@/lib/supabase/client";
 
 interface Category {
   id: string;
@@ -43,6 +43,7 @@ export default function EditProjectPage() {
   const fetchProject = useCallback(async () => {
     if (!id) return;
     setLoading(true);
+    const supabase = createClient();
     const { data, error } = await supabase
       .from("projects")
       .select("*")
@@ -54,6 +55,7 @@ export default function EditProjectPage() {
   }, [id]);
 
   const fetchCategories = useCallback(async () => {
+    const supabase = createClient();
     const { data, error } = await supabase
       .from("project_categories")
       .select("id, name");
@@ -106,6 +108,7 @@ export default function EditProjectPage() {
     setSaving(true);
     setError("");
     setSuccess("");
+    const supabase = createClient();
     const { error } = await supabase
       .from("projects")
       .update({

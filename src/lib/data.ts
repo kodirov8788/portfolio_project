@@ -1,7 +1,8 @@
-import { supabase } from "./supabase/client";
-// import { supabaseAdmin } from "./supabase/server";
+import { createClient } from "./supabase/client";
+// import { createClient as createServerClient } from "./supabase/server";
 
 export async function getProjects() {
+  const supabase = createClient();
   const { data, error } = await supabase
     .from("projects")
     .select("*")
@@ -16,6 +17,7 @@ export async function getProjects() {
 }
 
 export async function getFeaturedProjects() {
+  const supabase = createClient();
   const { data, error } = await supabase
     .from("projects")
     .select("*")
@@ -32,6 +34,7 @@ export async function getFeaturedProjects() {
 }
 
 export async function getBlogPosts() {
+  const supabase = createClient();
   const { data, error } = await supabase
     .from("blog_posts")
     .select("*")
@@ -47,6 +50,7 @@ export async function getBlogPosts() {
 }
 
 export async function getFeaturedBlogPosts() {
+  const supabase = createClient();
   const { data, error } = await supabase
     .from("blog_posts")
     .select("*")
@@ -72,6 +76,7 @@ export async function getContactMessages(options?: {
   dateFrom?: string;
   dateTo?: string;
 }) {
+  const supabase = createClient();
   const {
     page = 1,
     limit = 10,
@@ -131,6 +136,7 @@ export async function getContactMessages(options?: {
 }
 
 export async function getUnreadMessages() {
+  const supabase = createClient();
   const { data, error } = await supabase
     .from("contact_messages")
     .select("*")
@@ -147,6 +153,7 @@ export async function getUnreadMessages() {
 }
 
 export async function getDashboardStats() {
+  const supabase = createClient();
   // Get counts
   const [projectsResult, blogPostsResult, messagesResult] = await Promise.all([
     supabase.from("projects").select("*", { count: "exact", head: true }),
@@ -170,6 +177,7 @@ export async function createContactMessage(messageData: {
   subject: string;
   message: string;
 }) {
+  const supabase = createClient();
   const { data, error } = await supabase
     .from("contact_messages")
     .insert([messageData])
@@ -184,6 +192,7 @@ export async function createContactMessage(messageData: {
 }
 
 export async function markMessageAsRead(messageId: number) {
+  const supabase = createClient();
   const { error } = await supabase
     .from("contact_messages")
     .update({ read: true })
@@ -196,6 +205,7 @@ export async function markMessageAsRead(messageId: number) {
 }
 
 export async function deleteMessage(messageId: number) {
+  const supabase = createClient();
   const { error } = await supabase
     .from("contact_messages")
     .delete()
@@ -208,18 +218,20 @@ export async function deleteMessage(messageId: number) {
 }
 
 export async function softDeleteMessage(messageId: string) {
+  const supabase = createClient();
   const { error } = await supabase
     .from("contact_messages")
     .update({ deleted: true })
     .eq("id", messageId);
 
   if (error) {
-    console.error("Error soft-deleting message:", error);
+    console.error("Error soft deleting message:", error);
     throw error;
   }
 }
 
 export async function restoreMessage(messageId: string) {
+  const supabase = createClient();
   const { error } = await supabase
     .from("contact_messages")
     .update({ deleted: false })

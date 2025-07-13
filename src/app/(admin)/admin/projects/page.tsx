@@ -11,7 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Plus, Edit, Trash2, Eye } from "lucide-react";
 import Link from "next/link";
-import { supabase } from "@/lib/supabase/client";
+import { createClient } from "@/lib/supabase/client";
 
 interface Category {
   id: number;
@@ -42,6 +42,7 @@ export default function AdminProjectsPage() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
+        const supabase = createClient();
         const { data, error } = await supabase
           .from("projects")
           .select(
@@ -73,6 +74,7 @@ export default function AdminProjectsPage() {
     }
 
     try {
+      const supabase = createClient();
       const { error } = await supabase
         .from("projects")
         .delete()
