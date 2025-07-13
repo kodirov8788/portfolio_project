@@ -1,0 +1,333 @@
+import { createClient } from "@supabase/supabase-js";
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    autoRefreshToken: true,
+    persistSession: true,
+    detectSessionInUrl: true,
+  },
+  realtime: {
+    params: {
+      eventsPerSecond: 10,
+    },
+  },
+});
+
+// Database types
+export type Database = {
+  public: {
+    Tables: {
+      user_profiles: {
+        Row: {
+          id: string;
+          username: string | null;
+          email: string;
+          full_name: string | null;
+          first_name: string | null;
+          last_name: string | null;
+          bio: string | null;
+          avatar_url: string | null;
+          phone: string | null;
+          website: string | null;
+          location: string | null;
+          github_url: string | null;
+          linkedin_url: string | null;
+          twitter_url: string | null;
+          instagram_url: string | null;
+          role_id: string | null;
+          is_active: boolean;
+          email_verified: boolean;
+          last_login_at: string | null;
+          login_count: number;
+          preferences: Record<string, unknown>;
+          metadata: Record<string, unknown>;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id: string;
+          username?: string | null;
+          email: string;
+          full_name?: string | null;
+          first_name?: string | null;
+          last_name?: string | null;
+          bio?: string | null;
+          avatar_url?: string | null;
+          phone?: string | null;
+          website?: string | null;
+          location?: string | null;
+          github_url?: string | null;
+          linkedin_url?: string | null;
+          twitter_url?: string | null;
+          instagram_url?: string | null;
+          role_id?: string | null;
+          is_active?: boolean;
+          email_verified?: boolean;
+          last_login_at?: string | null;
+          login_count?: number;
+          preferences?: Record<string, unknown>;
+          metadata?: Record<string, unknown>;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          username?: string | null;
+          email?: string;
+          full_name?: string | null;
+          first_name?: string | null;
+          last_name?: string | null;
+          bio?: string | null;
+          avatar_url?: string | null;
+          phone?: string | null;
+          website?: string | null;
+          location?: string | null;
+          github_url?: string | null;
+          linkedin_url?: string | null;
+          twitter_url?: string | null;
+          instagram_url?: string | null;
+          role_id?: string | null;
+          is_active?: boolean;
+          email_verified?: boolean;
+          last_login_at?: string | null;
+          login_count?: number;
+          preferences?: Record<string, unknown>;
+          metadata?: Record<string, unknown>;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      blog_posts: {
+        Row: {
+          id: string;
+          title: string;
+          slug: string;
+          excerpt: string | null;
+          content: string;
+          featured_image: string | null;
+          featured_image_alt: string | null;
+          category_id: string | null;
+          author_id: string;
+          status: "draft" | "published" | "scheduled" | "archived";
+          featured: boolean;
+          reading_time: number | null;
+          views: number;
+          likes: number;
+          shares: number;
+          allow_comments: boolean;
+          seo_title: string | null;
+          seo_description: string | null;
+          seo_keywords: string[] | null;
+          published_at: string | null;
+          scheduled_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          title: string;
+          slug: string;
+          excerpt?: string | null;
+          content: string;
+          featured_image?: string | null;
+          featured_image_alt?: string | null;
+          category_id?: string | null;
+          author_id: string;
+          status?: "draft" | "published" | "scheduled" | "archived";
+          featured?: boolean;
+          reading_time?: number | null;
+          views?: number;
+          likes?: number;
+          shares?: number;
+          allow_comments?: boolean;
+          seo_title?: string | null;
+          seo_description?: string | null;
+          seo_keywords?: string[] | null;
+          published_at?: string | null;
+          scheduled_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          title?: string;
+          slug?: string;
+          excerpt?: string | null;
+          content?: string;
+          featured_image?: string | null;
+          featured_image_alt?: string | null;
+          category_id?: string | null;
+          author_id?: string;
+          status?: "draft" | "published" | "scheduled" | "archived";
+          featured?: boolean;
+          reading_time?: number | null;
+          views?: number;
+          likes?: number;
+          shares?: number;
+          allow_comments?: boolean;
+          seo_title?: string | null;
+          seo_description?: string | null;
+          seo_keywords?: string[] | null;
+          published_at?: string | null;
+          scheduled_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      projects: {
+        Row: {
+          id: string;
+          title: string;
+          slug: string;
+          short_description: string | null;
+          full_description: string | null;
+          featured_image: string | null;
+          featured_image_alt: string | null;
+          category_id: string | null;
+          github_url: string | null;
+          live_url: string | null;
+          demo_url: string | null;
+          status: "draft" | "published" | "archived";
+          featured: boolean;
+          start_date: string | null;
+          end_date: string | null;
+          technologies: string[];
+          difficulty: "beginner" | "intermediate" | "advanced" | "expert";
+          estimated_hours: number | null;
+          actual_hours: number | null;
+          budget: number | null;
+          client: string | null;
+          team_size: number | null;
+          views: number;
+          likes: number;
+          shares: number;
+          seo_title: string | null;
+          seo_description: string | null;
+          seo_keywords: string[] | null;
+          created_by: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          title: string;
+          slug: string;
+          short_description?: string | null;
+          full_description?: string | null;
+          featured_image?: string | null;
+          featured_image_alt?: string | null;
+          category_id?: string | null;
+          github_url?: string | null;
+          live_url?: string | null;
+          demo_url?: string | null;
+          status?: "draft" | "published" | "archived";
+          featured?: boolean;
+          start_date?: string | null;
+          end_date?: string | null;
+          technologies?: string[];
+          difficulty?: "beginner" | "intermediate" | "advanced" | "expert";
+          estimated_hours?: number | null;
+          actual_hours?: number | null;
+          budget?: number | null;
+          client?: string | null;
+          team_size?: number | null;
+          views?: number;
+          likes?: number;
+          shares?: number;
+          seo_title?: string | null;
+          seo_description?: string | null;
+          seo_keywords?: string[] | null;
+          created_by: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          title?: string;
+          slug?: string;
+          short_description?: string | null;
+          full_description?: string | null;
+          featured_image?: string | null;
+          featured_image_alt?: string | null;
+          category_id?: string | null;
+          github_url?: string | null;
+          live_url?: string | null;
+          demo_url?: string | null;
+          status?: "draft" | "published" | "archived";
+          featured?: boolean;
+          start_date?: string | null;
+          end_date?: string | null;
+          technologies?: string[];
+          difficulty?: "beginner" | "intermediate" | "advanced" | "expert";
+          estimated_hours?: number | null;
+          actual_hours?: number | null;
+          budget?: number | null;
+          client?: string | null;
+          team_size?: number | null;
+          views?: number;
+          likes?: number;
+          shares?: number;
+          seo_title?: string | null;
+          seo_description?: string | null;
+          seo_keywords?: string[] | null;
+          created_by?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      contact_messages: {
+        Row: {
+          id: string;
+          name: string;
+          email: string;
+          subject: string | null;
+          message: string;
+          category_id: string | null;
+          status: "new" | "read" | "replied" | "archived" | "spam";
+          priority: "low" | "medium" | "high" | "urgent";
+          ip_address: string | null;
+          user_agent: string | null;
+          read_at: string | null;
+          replied_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          name: string;
+          email: string;
+          subject?: string | null;
+          message: string;
+          category_id?: string | null;
+          status?: "new" | "read" | "replied" | "archived" | "spam";
+          priority?: "low" | "medium" | "high" | "urgent";
+          ip_address?: string | null;
+          user_agent?: string | null;
+          read_at?: string | null;
+          replied_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          email?: string;
+          subject?: string | null;
+          message?: string;
+          category_id?: string | null;
+          status?: "new" | "read" | "replied" | "archived" | "spam";
+          priority?: "low" | "medium" | "high" | "urgent";
+          ip_address?: string | null;
+          user_agent?: string | null;
+          read_at?: string | null;
+          replied_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+    };
+  };
+};
