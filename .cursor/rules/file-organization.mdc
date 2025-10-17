@@ -1,0 +1,495 @@
+---
+alwaysApply: false
+---
+
+# File Organization Rules for AutoReachPro
+
+## Overview
+
+This guide defines the standardized file organization structure for AutoReachPro project to maintain clean, organized, and maintainable codebase.
+
+## 📁 Directory Structure Rules
+
+### 1. Test Files Organization
+
+**Location**: `/scripts/` directory
+**Purpose**: All executable test scripts and automation tools
+
+#### Allowed Files:
+
+- `*.js` - JavaScript test scripts
+- `*.ts` - TypeScript test scripts
+- `*.sh` - Shell scripts for testing/automation
+- `test-*.js` - Test runner scripts
+- `*.test.js` - Unit test files
+- `*.spec.js` - Test specification files
+
+#### Examples:
+
+```
+scripts/
+├── test-api.sh
+├── test-distance.js
+├── test-map-pagination.js
+├── test-search-map.js
+├── postmanScript.js
+├── postman-test-runner.js
+└── check-categories.js
+```
+
+### 2. Postman Collections Organization
+
+**Location**: `/postman-docs/` directory
+**Purpose**: All Postman collections, documentation, and API testing files
+
+#### Allowed Files:
+
+- `*.json` - Postman collection files
+- `*.md` - Postman documentation
+- `README.md` - Postman setup instructions
+- `*.txt` - Postman environment files
+
+#### Examples:
+
+```
+postman-docs/
+├── postman-map-search-collection.json
+├── postman-standardized-api-tests.json
+├── postman-manage-groups-collection.json
+├── postman-message-sending-collection.json
+├── postman-paginated-contact-groups.json
+├── postman-test-with-real-data.json
+└── README.md
+```
+
+### 3. Documentation Organization
+
+**Location**: `/docs/` directory
+**Purpose**: All project documentation, guides, and technical specifications
+
+#### Allowed Files:
+
+- `*.md` - Markdown documentation files
+- `*.txt` - Text documentation files
+- `*.pdf` - PDF documentation (if needed)
+- `README.md` - Main documentation index
+
+#### Examples:
+
+```
+docs/
+├── README.md
+├── API_ENDPOINTS_SUMMARY.md
+├── AUTH_SYSTEM_OVERVIEW.md
+├── DATABASE_SETUP_GUIDE.md
+├── ENVIRONMENT_SETUP.md
+├── GROUP_MANAGEMENT.md
+├── MESSAGE_SENDING_GUIDE.md
+├── MANAGE_GROUPS_CODE_REVIEW.md
+├── PAGINATION_GUIDE.md
+├── TECHNICAL_DOCUMENTATION.md
+└── USER_GUIDE.md
+```
+
+## 🚫 Prohibited Locations
+
+### Root Directory Restrictions
+
+**DO NOT** place the following in root directory:
+
+- Test scripts (move to `/scripts/`)
+- Postman collections (move to `/postman-docs/`)
+- Documentation files (move to `/docs/`)
+- Temporary test files
+- Development notes
+
+### Exceptions
+
+**Allowed in root directory:**
+
+- `package.json`, `package-lock.json`
+- `next.config.ts`, `tailwind.config.js`
+- `tsconfig.json`, `eslint.config.mjs`
+- `README.md` (main project README)
+- `AI_WORK_LOG.md` (project log)
+- Environment files (`.env*`)
+- Configuration files (`vercel.json`, `ecosystem.config.js`)
+
+## 📋 File Naming Conventions
+
+### Test Files
+
+- Use descriptive names: `test-[feature].js`
+- Include purpose: `test-api-endpoints.js`
+- Use kebab-case: `test-map-pagination.js`
+
+### Postman Collections
+
+- Use descriptive names: `postman-[feature]-collection.json`
+- Include version if needed: `postman-v1-api-tests.json`
+- Use kebab-case: `postman-manage-groups-collection.json`
+
+### Documentation Files
+
+- Use descriptive names: `[FEATURE]_GUIDE.md`
+- Use UPPERCASE for guides: `MESSAGE_SENDING_GUIDE.md`
+- Use descriptive names: `API_ENDPOINTS_SUMMARY.md`
+
+## 🔄 Migration Rules
+
+### When Adding New Files
+
+1. **Test Scripts**: Always create in `/scripts/` directory
+2. **Postman Collections**: Always create in `/postman-docs/` directory
+3. **Documentation**: Always create in `/docs/` directory
+4. **Update imports**: Update any references to moved files
+
+### When Moving Existing Files
+
+1. **Update references**: Search and update all file references
+2. **Update documentation**: Update any documentation that references old paths
+3. **Update scripts**: Update any scripts that reference moved files
+4. **Test changes**: Verify all functionality still works after moves
+
+## 🛠️ Implementation Guidelines
+
+### For Developers
+
+1. **Before creating files**: Check this guide for proper location
+2. **When in doubt**: Ask team or follow existing patterns
+3. **Consistency**: Follow the same patterns across all features
+4. **Documentation**: Update this guide when adding new categories
+
+### For AI Assistants
+
+1. **Always check**: Verify file location before creating files
+2. **Follow patterns**: Use existing naming conventions
+3. **Update references**: When moving files, update all references
+4. **Maintain structure**: Keep the organized structure intact
+
+## 📊 Benefits
+
+### Organization Benefits
+
+- **Clear structure**: Easy to find files by purpose
+- **Maintainability**: Easier to maintain and update
+- **Scalability**: Structure scales with project growth
+- **Team collaboration**: Clear expectations for all team members
+
+### Development Benefits
+
+- **Faster development**: Know exactly where to find files
+- **Reduced conflicts**: Less chance of file conflicts
+- **Better testing**: Organized test files are easier to run
+- **Cleaner root**: Root directory stays clean and focused
+
+## 🔍 File Location Examples
+
+### ✅ Correct Locations
+
+```
+# Test scripts
+scripts/test-api.sh
+scripts/test-distance.js
+scripts/postmanScript.js
+
+# Postman collections
+postman-docs/postman-manage-groups-collection.json
+postman-docs/postman-message-sending-collection.json
+
+# Documentation
+docs/MESSAGE_SENDING_GUIDE.md
+docs/MANAGE_GROUPS_CODE_REVIEW.md
+docs/API_ENDPOINTS_SUMMARY.md
+```
+
+### ❌ Incorrect Locations
+
+```
+# DON'T put test scripts in root
+test-api.sh
+test-distance.js
+postmanScript.js
+
+# DON'T put Postman collections in root
+postman-manage-groups-collection.json
+postman-message-sending-collection.json
+
+# DON'T put docs in root (except main README)
+MESSAGE_SENDING_GUIDE.md
+MANAGE_GROUPS_CODE_REVIEW.md
+```
+
+## 🚀 Quick Reference
+
+| File Type           | Location         | Naming Convention                   |
+| ------------------- | ---------------- | ----------------------------------- |
+| Test Scripts        | `/scripts/`      | `test-[feature].js`                 |
+| Postman Collections | `/postman-docs/` | `postman-[feature]-collection.json` |
+| Documentation       | `/docs/`         | `[FEATURE]_GUIDE.md`                |
+| Main README         | `/` (root)       | `README.md`                         |
+| Project Log         | `/` (root)       | `AI_WORK_LOG.md`                    |
+
+## 📝 Maintenance
+
+### Regular Tasks
+
+1. **Monthly review**: Check for misplaced files
+2. **Update guide**: Add new patterns as they emerge
+3. **Clean up**: Remove unused files from wrong locations
+4. **Documentation**: Keep this guide updated
+
+### When Adding New Features
+
+1. **Create directories**: If new categories are needed
+2. **Update guide**: Add new patterns to this guide
+3. **Inform team**: Share new organization patterns
+4. **Test structure**: Verify new structure works
+
+This organization system ensures a clean, maintainable, and scalable project structure that benefits all team members and AI assistants working on the AutoReachPro project.
+
+# File Organization Rules for AutoReachPro
+
+## Overview
+
+This guide defines the standardized file organization structure for AutoReachPro project to maintain clean, organized, and maintainable codebase.
+
+## 📁 Directory Structure Rules
+
+### 1. Test Files Organization
+
+**Location**: `/scripts/` directory
+**Purpose**: All executable test scripts and automation tools
+
+#### Allowed Files:
+
+- `*.js` - JavaScript test scripts
+- `*.ts` - TypeScript test scripts
+- `*.sh` - Shell scripts for testing/automation
+- `test-*.js` - Test runner scripts
+- `*.test.js` - Unit test files
+- `*.spec.js` - Test specification files
+
+#### Examples:
+
+```
+scripts/
+├── test-api.sh
+├── test-distance.js
+├── test-map-pagination.js
+├── test-search-map.js
+├── postmanScript.js
+├── postman-test-runner.js
+└── check-categories.js
+```
+
+### 2. Postman Collections Organization
+
+**Location**: `/postman-docs/` directory
+**Purpose**: All Postman collections, documentation, and API testing files
+
+#### Allowed Files:
+
+- `*.json` - Postman collection files
+- `*.md` - Postman documentation
+- `README.md` - Postman setup instructions
+- `*.txt` - Postman environment files
+
+#### Examples:
+
+```
+postman-docs/
+├── postman-map-search-collection.json
+├── postman-standardized-api-tests.json
+├── postman-manage-groups-collection.json
+├── postman-message-sending-collection.json
+├── postman-paginated-contact-groups.json
+├── postman-test-with-real-data.json
+└── README.md
+```
+
+### 3. Documentation Organization
+
+**Location**: `/docs/` directory
+**Purpose**: All project documentation, guides, and technical specifications
+
+#### Allowed Files:
+
+- `*.md` - Markdown documentation files
+- `*.txt` - Text documentation files
+- `*.pdf` - PDF documentation (if needed)
+- `README.md` - Main documentation index
+
+#### Examples:
+
+```
+docs/
+├── README.md
+├── API_ENDPOINTS_SUMMARY.md
+├── AUTH_SYSTEM_OVERVIEW.md
+├── DATABASE_SETUP_GUIDE.md
+├── ENVIRONMENT_SETUP.md
+├── GROUP_MANAGEMENT.md
+├── MESSAGE_SENDING_GUIDE.md
+├── MANAGE_GROUPS_CODE_REVIEW.md
+├── PAGINATION_GUIDE.md
+├── TECHNICAL_DOCUMENTATION.md
+└── USER_GUIDE.md
+```
+
+## 🚫 Prohibited Locations
+
+### Root Directory Restrictions
+
+**DO NOT** place the following in root directory:
+
+- Test scripts (move to `/scripts/`)
+- Postman collections (move to `/postman-docs/`)
+- Documentation files (move to `/docs/`)
+- Temporary test files
+- Development notes
+
+### Exceptions
+
+**Allowed in root directory:**
+
+- `package.json`, `package-lock.json`
+- `next.config.ts`, `tailwind.config.js`
+- `tsconfig.json`, `eslint.config.mjs`
+- `README.md` (main project README)
+- `AI_WORK_LOG.md` (project log)
+- Environment files (`.env*`)
+- Configuration files (`vercel.json`, `ecosystem.config.js`)
+
+## 📋 File Naming Conventions
+
+### Test Files
+
+- Use descriptive names: `test-[feature].js`
+- Include purpose: `test-api-endpoints.js`
+- Use kebab-case: `test-map-pagination.js`
+
+### Postman Collections
+
+- Use descriptive names: `postman-[feature]-collection.json`
+- Include version if needed: `postman-v1-api-tests.json`
+- Use kebab-case: `postman-manage-groups-collection.json`
+
+### Documentation Files
+
+- Use descriptive names: `[FEATURE]_GUIDE.md`
+- Use UPPERCASE for guides: `MESSAGE_SENDING_GUIDE.md`
+- Use descriptive names: `API_ENDPOINTS_SUMMARY.md`
+
+## 🔄 Migration Rules
+
+### When Adding New Files
+
+1. **Test Scripts**: Always create in `/scripts/` directory
+2. **Postman Collections**: Always create in `/postman-docs/` directory
+3. **Documentation**: Always create in `/docs/` directory
+4. **Update imports**: Update any references to moved files
+
+### When Moving Existing Files
+
+1. **Update references**: Search and update all file references
+2. **Update documentation**: Update any documentation that references old paths
+3. **Update scripts**: Update any scripts that reference moved files
+4. **Test changes**: Verify all functionality still works after moves
+
+## 🛠️ Implementation Guidelines
+
+### For Developers
+
+1. **Before creating files**: Check this guide for proper location
+2. **When in doubt**: Ask team or follow existing patterns
+3. **Consistency**: Follow the same patterns across all features
+4. **Documentation**: Update this guide when adding new categories
+
+### For AI Assistants
+
+1. **Always check**: Verify file location before creating files
+2. **Follow patterns**: Use existing naming conventions
+3. **Update references**: When moving files, update all references
+4. **Maintain structure**: Keep the organized structure intact
+
+## 📊 Benefits
+
+### Organization Benefits
+
+- **Clear structure**: Easy to find files by purpose
+- **Maintainability**: Easier to maintain and update
+- **Scalability**: Structure scales with project growth
+- **Team collaboration**: Clear expectations for all team members
+
+### Development Benefits
+
+- **Faster development**: Know exactly where to find files
+- **Reduced conflicts**: Less chance of file conflicts
+- **Better testing**: Organized test files are easier to run
+- **Cleaner root**: Root directory stays clean and focused
+
+## 🔍 File Location Examples
+
+### ✅ Correct Locations
+
+```
+# Test scripts
+scripts/test-api.sh
+scripts/test-distance.js
+scripts/postmanScript.js
+
+# Postman collections
+postman-docs/postman-manage-groups-collection.json
+postman-docs/postman-message-sending-collection.json
+
+# Documentation
+docs/MESSAGE_SENDING_GUIDE.md
+docs/MANAGE_GROUPS_CODE_REVIEW.md
+docs/API_ENDPOINTS_SUMMARY.md
+```
+
+### ❌ Incorrect Locations
+
+```
+# DON'T put test scripts in root
+test-api.sh
+test-distance.js
+postmanScript.js
+
+# DON'T put Postman collections in root
+postman-manage-groups-collection.json
+postman-message-sending-collection.json
+
+# DON'T put docs in root (except main README)
+MESSAGE_SENDING_GUIDE.md
+MANAGE_GROUPS_CODE_REVIEW.md
+```
+
+## 🚀 Quick Reference
+
+| File Type           | Location         | Naming Convention                   |
+| ------------------- | ---------------- | ----------------------------------- |
+| Test Scripts        | `/scripts/`      | `test-[feature].js`                 |
+| Postman Collections | `/postman-docs/` | `postman-[feature]-collection.json` |
+| Documentation       | `/docs/`         | `[FEATURE]_GUIDE.md`                |
+| Main README         | `/` (root)       | `README.md`                         |
+| Project Log         | `/` (root)       | `AI_WORK_LOG.md`                    |
+
+## 📝 Maintenance
+
+### Regular Tasks
+
+1. **Monthly review**: Check for misplaced files
+2. **Update guide**: Add new patterns as they emerge
+3. **Clean up**: Remove unused files from wrong locations
+4. **Documentation**: Keep this guide updated
+
+### When Adding New Features
+
+1. **Create directories**: If new categories are needed
+2. **Update guide**: Add new patterns to this guide
+3. **Inform team**: Share new organization patterns
+4. **Test structure**: Verify new structure works
+
+This organization system ensures a clean, maintainable, and scalable project structure that benefits all team members and AI assistants working on the AutoReachPro project.

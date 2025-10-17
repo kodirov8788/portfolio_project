@@ -1,0 +1,24 @@
+---
+description: Internationalization Rule – Japanese Primary, Secondary Other Languages
+globs:
+  - "apps/web/**/*.{ts,tsx,js,jsx,mdx}"
+  - "packages/ui/**/*.{ts,tsx,js,jsx,mdx}"
+alwaysApply: false
+---
+
+# Internationalization: Japanese-First
+
+1. Primary locale: Japanese (`ja`). All new or edited pages should default to natural, idiomatic Japanese, modeled on established Japanese websites.
+2. Secondary locales (e.g., English) load only after Japanese content is in place.
+3. Use i18next/react-i18next with locale order: `['ja', '<other_locale>']`.
+4. Maintain parallel JSON resource files:
+   - `locales/ja/common.json`
+   - `locales/<other_locale>/common.json`
+5. Keep identical key sets across all locale files.
+6. Write Japanese copy that feels native—avoid literal machine translations.
+7. Run your extraction and sync scripts after updating strings:
+   - `yarn i18n:extract`
+   - `yarn i18n:sync`
+8. Validate that no keys are missing or untranslated before merging.
+9. Review translations for cultural nuances and context accuracy.
+10. Document any locale-specific formatting (dates, numbers) in code comments.

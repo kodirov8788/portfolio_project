@@ -1,21 +1,55 @@
-import { forwardRef } from "react";
-import { cn } from "@/lib/utils";
+import React, { forwardRef } from "react";
+import { cn } from "../../lib/utils";
 
-const Textarea = forwardRef<
-  HTMLTextAreaElement,
-  React.TextareaHTMLAttributes<HTMLTextAreaElement>
->(({ className, ...props }, ref) => {
-  return (
-    <textarea
-      className={cn(
-        "flex min-h-[80px] w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50",
-        className
-      )}
-      ref={ref}
-      {...props}
-    />
-  );
-});
+export interface TextareaProps
+  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  error?: boolean;
+}
+
+const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
+  ({ className, error, ...props }, ref) => {
+    const baseClasses = [
+        "w-full px-3 py-2",
+        "border rounded-md",
+        "text-sm",
+        "transition-colors duration-200",
+        "focus:outline-none focus:ring-2 focus:ring-offset-2",
+        "placeholder:text-[var(--color-text-tertiary)]",
+        "resize-vertical",
+    ];
+
+    const stateClasses = error
+        ? [
+            "border-red-300",
+            "text-red-900",
+            "placeholder-red-300",
+            "focus:ring-red-500",
+            "focus:border-red-500",
+          ]
+        : [
+            "border-[var(--color-border-primary)]",
+            "text-[var(--color-text-primary)]",
+            "bg-[var(--color-bg-primary)]",
+            "focus:ring-[var(--color-border-focus)]",
+            "focus:border-[var(--color-border-focus)]",
+            "hover:border-[var(--color-border-hover)]",
+          ];
+
+    const classes = cn(baseClasses, stateClasses, className);
+
+    return (
+        <textarea
+          className={classes}
+          ref={ref}
+          {...props}
+        />
+    );
+  }
+);
+
 Textarea.displayName = "Textarea";
 
-export { Textarea };
+export default Textarea;
+
+
+

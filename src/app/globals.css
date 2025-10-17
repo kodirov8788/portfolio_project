@@ -1,32 +1,159 @@
+@import "../styles/design-tokens.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  body {
-    @apply bg-white text-gray-900;
+/* ===== BASE STYLES ===== */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== TYPOGRAPHY ===== */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+}
+
+h1 { font-size: var(--font-size-4xl); }
+h2 { font-size: var(--font-size-3xl); }
+h3 { font-size: var(--font-size-2xl); }
+h4 { font-size: var(--font-size-xl); }
+h5 { font-size: var(--font-size-lg); }
+h6 { font-size: var(--font-size-base); }
+
+p {
+  margin-bottom: var(--space-4);
+  color: var(--color-text-secondary);
+}
+
+/* ===== LINKS ===== */
+a {
+  color: var(--color-interactive-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-interactive-primary-hover);
+}
+
+/* ===== FOCUS STYLES ===== */
+*:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@layer components {
-  .prose {
-    @apply max-w-none;
+@keyframes slideDown {
+  from { 
+    opacity: 0;
+    transform: translateY(-10px);
   }
-  
-  .prose h1,
-  .prose h2,
-  .prose h3,
-  .prose h4,
-  .prose h5,
-  .prose h6 {
-    @apply text-gray-900 font-semibold;
+  to { 
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .prose p {
-    @apply text-gray-600 leading-relaxed;
+}
+
+@keyframes scaleIn {
+  from { 
+    opacity: 0;
+    transform: scale(0.95);
   }
-  
-  .prose a {
-    @apply text-blue-600 hover:text-blue-800 transition-colors;
+  to { 
+    opacity: 1;
+    transform: scale(1);
   }
+}
+
+@keyframes bounceGentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.animate-fade-in { animation: fadeIn 0.5s ease-in-out; }
+.animate-slide-up { animation: slideUp 0.3s ease-out; }
+.animate-slide-down { animation: slideDown 0.3s ease-out; }
+.animate-scale-in { animation: scaleIn 0.2s ease-out; }
+.animate-bounce-gentle { animation: bounceGentle 2s infinite; }
+
+/* ===== RESPONSIVE UTILITIES ===== */
+@media (max-width: 640px) {
+  .container { padding-left: var(--space-4); padding-right: var(--space-4); }
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+  .container { padding-left: var(--space-6); padding-right: var(--space-6); }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .container { padding-left: var(--space-8); padding-right: var(--space-8); }
+}
+
+@media (min-width: 1025px) {
+  .container { padding-left: var(--space-12); padding-right: var(--space-12); }
+}
+
+/* ===== FORCE LIGHT THEME ===== */
+/* Override any dark theme styles to ensure white theme always */
+html, body {
+  background-color: var(--color-neutral-50) !important;
+  color: var(--color-neutral-900) !important;
+}
+
+/* Force light theme variables */
+:root {
+  --color-bg-primary: var(--color-neutral-50) !important;
+  --color-bg-secondary: #ffffff !important;
+  --color-bg-tertiary: var(--color-neutral-100) !important;
+  --color-bg-elevated: #ffffff !important;
+  --color-text-primary: var(--color-neutral-900) !important;
+  --color-text-secondary: var(--color-neutral-700) !important;
+  --color-text-tertiary: var(--color-neutral-500) !important;
+  --color-border-primary: var(--color-neutral-200) !important;
+  --color-border-secondary: var(--color-neutral-300) !important;
+}
+
+/* Override dark theme if it gets applied */
+[data-theme="dark"] {
+  --color-bg-primary: var(--color-neutral-50) !important;
+  --color-bg-secondary: #ffffff !important;
+  --color-bg-tertiary: var(--color-neutral-100) !important;
+  --color-bg-elevated: #ffffff !important;
+  --color-text-primary: var(--color-neutral-900) !important;
+  --color-text-secondary: var(--color-neutral-700) !important;
+  --color-text-tertiary: var(--color-neutral-500) !important;
+  --color-border-primary: var(--color-neutral-200) !important;
+  --color-border-secondary: var(--color-neutral-300) !important;
 }

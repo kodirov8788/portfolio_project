@@ -1,80 +1,77 @@
-import { forwardRef } from "react";
-import { cn } from "@/lib/utils";
+"use client";
 
-const Card = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn(
-        "rounded-lg border border-gray-200 bg-white shadow-sm",
-        className
-      )}
-      {...props}
-    />
-  )
-);
-Card.displayName = "Card";
+import React from "react";
 
-const CardHeader = forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("flex flex-col space-y-1.5 p-6", className)}
-    {...props}
-  />
-));
-CardHeader.displayName = "CardHeader";
+export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+  variant?: "default" | "elevated" | "outlined" | "interactive";
+  padding?: "none" | "sm" | "md" | "lg" | "xl";
+}
 
-const CardTitle = forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLHeadingElement>
->(({ className, ...props }, ref) => (
-  <h3
-    ref={ref}
-    className={cn(
-      "text-2xl font-semibold leading-none tracking-tight",
-      className
-    )}
-    {...props}
-  />
-));
-CardTitle.displayName = "CardTitle";
+const Card: React.FC<CardProps> = ({
+  className = "",
+  variant = "default",
+  padding = "md",
+  children,
+  ...props
+}) => {
+  const baseClasses = "rounded-xl transition-all duration-200 border";
 
-const CardDescription = forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLParagraphElement>
->(({ className, ...props }, ref) => (
-  <p ref={ref} className={cn("text-sm text-gray-600", className)} {...props} />
-));
-CardDescription.displayName = "CardDescription";
+  const variantClasses = {
+    default: "bg-gray-100 border-gray-200 shadow-sm",
+    elevated: "bg-white border-gray-200 shadow-lg hover:shadow-xl",
+    outlined: "bg-gray-50 border-gray-300",
+    interactive:
+        "bg-gray-100 border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 cursor-pointer",
+  };
 
-const CardContent = forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
-));
-CardContent.displayName = "CardContent";
+  const paddingClasses = {
+    none: "",
+    sm: "p-3",
+    md: "p-6",
+    lg: "p-8",
+    xl: "p-10",
+  };
 
-const CardFooter = forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("flex items-center p-6 pt-0", className)}
-    {...props}
-  />
-));
-CardFooter.displayName = "CardFooter";
+  const classes =
+    `${baseClasses} ${variantClasses[variant]} ${paddingClasses[padding]} ${className}`.trim();
 
-export {
-  Card,
-  CardHeader,
-  CardFooter,
-  CardTitle,
-  CardDescription,
-  CardContent,
+  return (
+    <div className={classes} {...props}>
+        {children}
+    </div>
+  );
 };
+
+export { Card };
+
+// Card sub-components
+export const CardHeader: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
+  className = "",
+  ...props
+}) => <div className={`flex flex-col space-y-1.5 ${className}`} {...props} />;
+
+export const CardTitle: React.FC<React.HTMLAttributes<HTMLHeadingElement>> = ({
+  className = "",
+  ...props
+}) => (
+  <h3
+    className={`text-xl font-semibold leading-none tracking-tight text-gray-900 ${className}`}
+    {...props}
+  />
+);
+
+export const CardDescription: React.FC<
+  React.HTMLAttributes<HTMLParagraphElement>
+> = ({ className = "", ...props }) => (
+  <p className={`text-sm text-gray-600 ${className}`} {...props} />
+);
+
+export const CardContent: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
+  className = "",
+  ...props
+}) => <div className={`pt-0 ${className}`} {...props} />;
+
+export const CardFooter: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
+  className = "",
+  ...props
+}) => <div className={`flex items-center pt-6 ${className}`} {...props} />;

@@ -56,20 +56,12 @@ A modern, full-stack portfolio website built with Next.js, TypeScript, Supabase,
 - **Rich Text**: TipTap editor
 - **Deployment**: Vercel (recommended)
 
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18+
-- npm or yarn
-- Supabase account
-
-### Installation
+## Quick Start
 
 1. **Clone the repository**
 
    ```bash
-   git clone <your-repo-url>
+   git clone <repository-url>
    cd portfolio_project
    ```
 
@@ -79,25 +71,51 @@ A modern, full-stack portfolio website built with Next.js, TypeScript, Supabase,
    npm install
    ```
 
-3. **Set up Supabase**
-
-   - Create a new Supabase project
-   - Run the SQL schema from `database-schema.sql` in your Supabase SQL editor
-   - Get your project URL and anon key
-
-4. **Environment variables**
+3. **Set up environment variables**
 
    ```bash
    cp env.example .env.local
+   # Edit .env.local with your Supabase and PostgreSQL credentials
+   # See docs/ENVIRONMENT_SETUP.md for detailed instructions
    ```
 
-   Update `.env.local` with your Supabase credentials:
+4. **Test your environment setup**
 
-   ```env
-   NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-   SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+   ```bash
+   npm run test:connections
    ```
+
+5. **Set up the database**
+
+   ```bash
+   npm run setup:database
+   ```
+
+6. **Start the development server**
+
+   ```bash
+   npm run dev
+   ```
+
+7. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## Environment Setup
+
+For detailed environment configuration instructions, see [Environment Setup Guide](docs/ENVIRONMENT_SETUP.md).
+
+### Required Environment Variables
+
+- **Supabase**: Project URL, API keys, JWT secret
+- **PostgreSQL**: Connection strings and credentials
+- **NextAuth**: Secret and URL configuration
+- **Email**: SMTP settings (optional)
+
+### Health Check Endpoints
+
+- **System Health**: `GET /api/health`
+- **Database Health**: `GET /api/health/database`
+- **Quick Check**: `GET /api/health?quick=true`
 
 5. **Run the development server**
 

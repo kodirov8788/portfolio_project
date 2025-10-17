@@ -1,0 +1,30 @@
+---
+description: Single authentication system rules and best practices for Cursor AI
+globs:
+  - "**/*auth*/**"
+  - "**/*login*/**"
+  - "**/*signup*/**"
+  - "**/middleware.ts"
+  - "**/auth.ts"
+  - "**/api/auth/**"
+alwaysApply: true
+---
+
+# Single Authentication System Rules for Cursor AI
+
+## Core Authentication Strategy
+
+**MANDATORY: Use ONLY NextAuth.js v5 (Auth.js) + Prisma ORM for PostgreSQL. NO custom JWT, NO hybrid systems, NO exceptions.**
+
+### Single Required Stack
+
+```json
+{
+  "@auth/core": "^0.34.2",
+  "@auth/prisma-adapter": "^2.4.0",
+  "next-auth": "5.0.0-beta.19",
+  "@prisma/client": "^5.19.1",
+  "prisma": "^5.19.1",
+  "bcryptjs": "^2.4.3"
+}
+```
