@@ -3,6 +3,13 @@ import type { View } from "../types";
 import { ICONS, PERSONAL_INFO } from "../constants";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import ThemeToggle from "./ThemeToggle";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface SidebarProps {
   currentView: View;
@@ -52,65 +59,125 @@ const NavLink: React.FC<{
 
 const Sidebar: React.FC<SidebarProps> = ({ currentView, setCurrentView }) => {
   return (
-    <div className="flex flex-col h-full bg-[var(--color-bg-secondary)] border-r border-[var(--color-border-primary)]">
-      {/* Logo */}
-      <div className="flex items-center justify-center h-20 px-4 border-b border-[var(--color-border-primary)]">
-        <div className="flex items-center space-x-3">
-          <img
-            src={PERSONAL_INFO.avatar}
-            alt="Avatar"
-            className="h-10 w-10 rounded-full border-2 border-[var(--color-primary-200)]"
-          />
-          <div className="flex flex-col">
-            <span className="font-semibold text-lg text-[var(--color-text-primary)]">
-              {PERSONAL_INFO.name}
-            </span>
-            <span className="text-xs text-[var(--color-text-tertiary)]">
-              {PERSONAL_INFO.title}
-            </span>
+    <TooltipProvider>
+      <div className="flex flex-col h-full bg-[var(--color-bg-secondary)] border-r border-[var(--color-border-primary)]">
+        {/* Logo */}
+        <div className="flex items-center justify-center h-20 px-4 border-b border-[var(--color-border-primary)]">
+          <div className="flex items-center space-x-3">
+            <img
+              src={PERSONAL_INFO.avatar}
+              alt="Avatar"
+              className="h-10 w-10 rounded-full border-2 border-[var(--color-primary-200)]"
+            />
+            <div className="flex flex-col">
+              <span className="font-semibold text-lg text-[var(--color-text-primary)]">
+                {PERSONAL_INFO.name}
+              </span>
+              <span className="text-xs text-[var(--color-text-tertiary)]">
+                {PERSONAL_INFO.title}
+              </span>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Navigation */}
-      <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
-        <NavLink
-          view="Dashboard"
-          label="Dashboard"
-          currentView={currentView}
-          onClick={setCurrentView}
-          Icon={ICONS.Dashboard}
-        />
-        <NavLink
-          view="Projects"
-          label="Projects"
-          currentView={currentView}
-          onClick={setCurrentView}
-          Icon={ICONS.Projects}
-        />
-        <NavLink
-          view="About"
-          label="About Me"
-          currentView={currentView}
-          onClick={setCurrentView}
-          Icon={ICONS.About}
-        />
-        <NavLink
-          view="Contact"
-          label="Contact"
-          currentView={currentView}
-          onClick={setCurrentView}
-          Icon={ICONS.Contact}
-        />
-      </nav>
+        {/* Navigation */}
+        <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+          <NavLink
+            view="Dashboard"
+            label="Dashboard"
+            currentView={currentView}
+            onClick={setCurrentView}
+            Icon={ICONS.Dashboard}
+          />
+          <NavLink
+            view="Projects"
+            label="Projects"
+            currentView={currentView}
+            onClick={setCurrentView}
+            Icon={ICONS.Projects}
+          />
+          <NavLink
+            view="About"
+            label="About Me"
+            currentView={currentView}
+            onClick={setCurrentView}
+            Icon={ICONS.About}
+          />
+          <NavLink
+            view="Contact"
+            label="Contact"
+            currentView={currentView}
+            onClick={setCurrentView}
+            Icon={ICONS.Contact}
+          />
+        </nav>
 
-      {/* Footer */}
-      <div className="border-t border-[var(--color-border-primary)] p-4">
-        <p className="text-xs text-[var(--color-text-tertiary)] text-center">
-          &copy; {new Date().getFullYear()} {PERSONAL_INFO.name}
-        </p>
+        {/* Social Links & Theme Toggle */}
+        <div className="border-t border-[var(--color-border-primary)] p-4 space-y-4">
+          {/* Theme Toggle */}
+          <div className="flex justify-center">
+            <ThemeToggle />
+          </div>
+
+          {/* Social Links */}
+          <div className="flex justify-center space-x-3">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="ghost" size="icon" asChild>
+                  <a
+                    href={PERSONAL_INFO.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="h-8 w-8"
+                  >
+                    <ICONS.GitHub className="h-4 w-4" />
+                  </a>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>GitHub Profile</p>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="ghost" size="icon" asChild>
+                  <a
+                    href={PERSONAL_INFO.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="h-8 w-8"
+                  >
+                    <ICONS.LinkedIn className="h-4 w-4" />
+                  </a>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>LinkedIn Profile</p>
+              </TooltipContent>
+            </Tooltip>
+
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="ghost" size="icon" asChild>
+                  <a href={`mailto:${PERSONAL_INFO.email}`} className="h-8 w-8">
+                    <ICONS.Contact className="h-4 w-4" />
+                  </a>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Send Email</p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
+
+          {/* Copyright */}
+          <p className="text-xs text-[var(--color-text-tertiary)] text-center">
+            &copy; {new Date().getFullYear()} {PERSONAL_INFO.name}
+          </p>
+        </div>
       </div>
-    </div>
+    </TooltipProvider>
   );
 };
 

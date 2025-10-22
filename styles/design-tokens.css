@@ -1,17 +1,29 @@
 /* ===== DESIGN TOKENS ===== */
 :root {
   /* ===== COLOR PALETTE ===== */
-  /* Primary Colors - Accessible Blue */
-  --color-primary-50: #eff6ff;
-  --color-primary-100: #dbeafe;
-  --color-primary-200: #bfdbfe;
-  --color-primary-300: #93c5fd;
-  --color-primary-400: #60a5fa;
-  --color-primary-500: #3b82f6;
-  --color-primary-600: #2563eb;
-  --color-primary-700: #1d4ed8;
-  --color-primary-800: #1e40af;
-  --color-primary-900: #1e3a8a;
+  /* Primary Colors - Modern Indigo */
+  --color-primary-50: #eef2ff;
+  --color-primary-100: #e0e7ff;
+  --color-primary-200: #c7d2fe;
+  --color-primary-300: #a5b4fc;
+  --color-primary-400: #818cf8;
+  --color-primary-500: #6366f1;
+  --color-primary-600: #4f46e5;
+  --color-primary-700: #4338ca;
+  --color-primary-800: #3730a3;
+  --color-primary-900: #312e81;
+
+  /* Accent Colors - Vibrant Cyan */
+  --color-accent-50: #ecfeff;
+  --color-accent-100: #cffafe;
+  --color-accent-200: #a5f3fc;
+  --color-accent-300: #67e8f9;
+  --color-accent-400: #22d3ee;
+  --color-accent-500: #06b6d4;
+  --color-accent-600: #0891b2;
+  --color-accent-700: #0e7490;
+  --color-accent-800: #155e75;
+  --color-accent-900: #164e63;
 
   /* Neutral Colors - Accessible Gray */
   --color-neutral-50: #f8fafc;
@@ -106,7 +118,7 @@
 /* ===== LIGHT MODE COLORS (DEFAULT) ===== */
 :root {
   /* Background Colors */
-  --color-bg-primary: var(--color-neutral-50);
+  --color-bg-primary: #fafafa;
   --color-bg-secondary: #ffffff;
   --color-bg-tertiary: var(--color-neutral-100);
   --color-bg-elevated: #ffffff;
@@ -135,6 +147,34 @@
   --color-status-warning: var(--color-warning);
   --color-status-error: var(--color-error);
   --color-status-info: var(--color-info);
+}
+
+/* ===== DARK MODE COLORS ===== */
+.dark {
+  /* Background Colors */
+  --color-bg-primary: #0f172a;
+  --color-bg-secondary: #1e293b;
+  --color-bg-tertiary: #334155;
+  --color-bg-elevated: #1e293b;
+  --color-bg-overlay: rgb(0 0 0 / 0.7);
+
+  /* Text Colors */
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #e2e8f0;
+  --color-text-tertiary: #94a3b8;
+  --color-text-inverse: #0f172a;
+  --color-text-muted: #64748b;
+
+  /* Border Colors */
+  --color-border-primary: #334155;
+  --color-border-secondary: #475569;
+  --color-border-focus: var(--color-primary-400);
+
+  /* Interactive Colors */
+  --color-interactive-primary: var(--color-primary-500);
+  --color-interactive-primary-hover: var(--color-primary-400);
+  --color-interactive-secondary: #334155;
+  --color-interactive-secondary-hover: #475569;
 }
 
 /* ===== RESPONSIVE BREAKPOINTS ===== */

@@ -1,4 +1,6 @@
 import React from "react";
+import HeroSection from "../components/HeroSection";
+import SkillCategory from "../components/SkillCategory";
 import {
   BarChart,
   Bar,
@@ -10,7 +12,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import Card from "../components/Card";
-import { PERSONAL_INFO, SKILLS, ICONS } from "../constants";
+import { PERSONAL_INFO, SKILLS, SKILL_CATEGORIES, ICONS } from "../constants";
 import SkillBadge from "../components/SkillBadge";
 import { Separator } from "@/components/ui/separator";
 import { Stack } from "../components/ui/stack";
@@ -33,41 +35,74 @@ const StatCard: React.FC<{
 
 const Dashboard: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[var(--color-neutral-50)] to-white">
-      <div className="w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto py-6 lg:py-8">
-        <Stack direction="vertical" spacing="lg">
-          {/* Header */}
-          <div className="animate-fade-in">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
-              <div>
-                <h1 className="text-2xl lg:text-3xl font-bold text-[var(--color-text-primary)] mb-2">
-                  Welcome to my Dashboard, {PERSONAL_INFO.name.split(" ")[0]}!
-                </h1>
-                <p className="text-[var(--color-text-secondary)]">
-                  {PERSONAL_INFO.title}
-                </p>
-              </div>
+    <div className="min-h-screen" data-section="hero">
+      {/* Hero Section */}
+      <HeroSection />
+
+      {/* Stats Section */}
+      <section
+        className="py-16 bg-[var(--color-bg-secondary)]"
+        data-section="stats"
+      >
+        <div className="w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+          <Stack direction="vertical" spacing="lg">
+            <div className="text-center animate-fade-in">
+              <h2 className="text-3xl lg:text-4xl font-bold text-[var(--color-text-primary)] mb-4">
+                Professional Overview
+              </h2>
+              <p className="text-[var(--color-text-secondary)] max-w-2xl mx-auto">
+                Key metrics and achievements that showcase my expertise and
+                experience
+              </p>
             </div>
+
+            {/* Stats Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <StatCard
+                title="Years of Experience"
+                value="8+"
+                icon={ICONS.Shield}
+              />
+              <StatCard
+                title="Projects Completed"
+                value="25+"
+                icon={ICONS.Rocket}
+              />
+              <StatCard title="Primary Tech" value="React" icon={ICONS.Code} />
+              <StatCard title="Happy Clients" value="15" icon={ICONS.Heart} />
+            </div>
+          </Stack>
+        </div>
+      </section>
+
+      {/* Skills Section */}
+      <section
+        className="py-16 bg-[var(--color-bg-primary)]"
+        data-section="skills"
+      >
+        <div className="w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+          <div className="text-center mb-12 animate-fade-in">
+            <h2 className="text-3xl lg:text-4xl font-bold text-[var(--color-text-primary)] mb-4">
+              Skills & Expertise
+            </h2>
+            <p className="text-[var(--color-text-secondary)] max-w-2xl mx-auto">
+              A comprehensive overview of my technical skills organized by
+              category
+            </p>
           </div>
 
-          {/* Stats Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <StatCard
-              title="Years of Experience"
-              value="8+"
-              icon={ICONS.Shield}
-            />
-            <StatCard
-              title="Projects Completed"
-              value="25+"
-              icon={ICONS.Rocket}
-            />
-            <StatCard title="Primary Tech" value="React" icon={ICONS.Code} />
-            <StatCard title="Happy Clients" value="15" icon={ICONS.Heart} />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            {SKILL_CATEGORIES.map((category, index) => (
+              <div
+                key={category.id}
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <SkillCategory category={category} />
+              </div>
+            ))}
           </div>
 
-          {/* Main Content Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <Card
               title="Skills Proficiency"
               variant="elevated"
@@ -112,7 +147,7 @@ const Dashboard: React.FC = () => {
                 {SKILLS.map((skill) => (
                   <div
                     key={skill.name}
-                    className="flex items-center bg-[var(--color-bg-tertiary)] p-3 rounded-lg hover:bg-[var(--color-primary-50)] transition-colors duration-200"
+                    className="flex items-center bg-[var(--color-bg-tertiary)] p-3 rounded-lg hover:bg-[var(--color-primary-50)] dark:hover:bg-[var(--color-primary-900)] transition-colors duration-200"
                   >
                     <ICONS.Code className="h-4 w-4 text-[var(--color-primary-600)] mr-2" />
                     <span className="font-semibold text-[var(--color-text-primary)]">
@@ -132,8 +167,8 @@ const Dashboard: React.FC = () => {
               </p>
             </Card>
           </div>
-        </Stack>
-      </div>
+        </div>
+      </section>
     </div>
   );
 };

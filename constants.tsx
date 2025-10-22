@@ -1,4 +1,7 @@
 import type { Project, Skill } from "./types";
+import type { TimelineItemData } from "./components/TimelineItem";
+import type { SkillCategoryData } from "./components/SkillCategory";
+import { Code, Database, Palette, Wrench } from "lucide-react";
 
 export const ICONS = {
   Dashboard: (props: { className?: string }) => (
@@ -285,5 +288,123 @@ export const PROJECTS: Project[] = [
     tags: ["Next.js", "GraphQL", "Contentful", "Tailwind CSS"],
     liveUrl: "#",
     sourceUrl: "#",
+  },
+];
+
+export const TIMELINE_DATA: TimelineItemData[] = [
+  {
+    id: "1",
+    title: "Senior Frontend Engineer",
+    organization: "TechCorp Solutions",
+    location: "San Francisco, CA",
+    period: "2022 - Present",
+    description:
+      "Leading frontend development for enterprise applications, mentoring junior developers, and implementing modern React patterns and TypeScript best practices.",
+    type: "experience",
+    current: true,
+  },
+  {
+    id: "2",
+    title: "Frontend Developer",
+    organization: "StartupXYZ",
+    location: "Remote",
+    period: "2020 - 2022",
+    description:
+      "Built responsive web applications using React, Next.js, and modern CSS frameworks. Collaborated with design teams to implement pixel-perfect UIs.",
+    type: "experience",
+  },
+  {
+    id: "3",
+    title: "Bachelor of Computer Science",
+    organization: "University of Technology",
+    location: "Boston, MA",
+    period: "2016 - 2020",
+    description:
+      "Graduated with honors, focusing on software engineering, web development, and user experience design. Completed multiple projects in React and Node.js.",
+    type: "education",
+  },
+  {
+    id: "4",
+    title: "AWS Certified Developer",
+    organization: "Amazon Web Services",
+    period: "2021",
+    description:
+      "Certified in developing and maintaining applications on the AWS platform, with expertise in cloud architecture and deployment strategies.",
+    type: "certification",
+  },
+  {
+    id: "5",
+    title: "React Developer Certification",
+    organization: "Meta (Facebook)",
+    period: "2020",
+    description:
+      "Completed comprehensive React development certification covering modern React patterns, hooks, context, and performance optimization.",
+    type: "certification",
+  },
+];
+
+export const SKILL_CATEGORIES: SkillCategoryData[] = [
+  {
+    id: "frontend",
+    name: "Frontend Development",
+    icon: Code,
+    color: "bg-[var(--color-primary-500)]",
+    skills: [
+      "React",
+      "TypeScript",
+      "JavaScript",
+      "Next.js",
+      "Tailwind CSS",
+      "HTML5",
+      "CSS3",
+      "SASS",
+    ],
+  },
+  {
+    id: "backend",
+    name: "Backend & Database",
+    icon: Database,
+    color: "bg-[var(--color-accent-500)]",
+    skills: [
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "PostgreSQL",
+      "GraphQL",
+      "REST APIs",
+      "Firebase",
+      "AWS",
+    ],
+  },
+  {
+    id: "design",
+    name: "Design & UX",
+    icon: Palette,
+    color: "bg-[var(--color-success)]",
+    skills: [
+      "UI/UX Design",
+      "Figma",
+      "Adobe XD",
+      "Prototyping",
+      "User Research",
+      "Accessibility",
+      "Design Systems",
+    ],
+  },
+  {
+    id: "tools",
+    name: "Tools & Technologies",
+    icon: Wrench,
+    color: "bg-[var(--color-warning)]",
+    skills: [
+      "Git",
+      "Docker",
+      "Webpack",
+      "Vite",
+      "Jest",
+      "Cypress",
+      "VS Code",
+      "Chrome DevTools",
+    ],
   },
 ];
