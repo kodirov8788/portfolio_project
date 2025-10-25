@@ -60,8 +60,8 @@ const Contact = () => {
     {
       icon: Mail,
       title: "Email",
-      value: "your.email@example.com",
-      href: "mailto:your.email@example.com",
+      value: "mukhammadali.kodirov@example.com",
+      href: "mailto:mukhammadali.kodirov@example.com",
     },
     {
       icon: Phone,
@@ -224,7 +224,7 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-3 border border-gray-300 dark:border-dark-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-dark-800 text-dark-900 dark:text-white transition-colors duration-200"
-                    placeholder="your.email@example.com"
+                    placeholder="mukhammadali.kodirov@example.com"
                   />
                 </div>
               </div>

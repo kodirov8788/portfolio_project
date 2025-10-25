@@ -77,11 +77,15 @@ const Sidebar = () => {
           {/* Logo */}
           <div className="flex items-center space-x-3 mb-12">
             <div className="p-2 bg-primary-100 dark:bg-primary-900 rounded-lg">
-              <Code className="h-8 w-8 text-primary-600" />
+              <img
+                src="/logo.png"
+                alt="Code & Coffee Logo"
+                className="h-8 w-8"
+              />
             </div>
             <div>
               <h1 className="text-xl font-bold text-dark-900 dark:text-white">
-                Portfolio
+                Code & Coffee
               </h1>
             </div>
           </div>
@@ -165,7 +169,7 @@ const Sidebar = () => {
             {/* Social links */}
             <div className="flex space-x-3">
               <a
-                href="mailto:your.email@example.com"
+                href="mailto:mukhammadali.kodirov@example.com"
                 className="p-3 bg-gray-100 dark:bg-dark-700 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900 transition-colors duration-200"
                 aria-label="Email"
               >
@@ -205,11 +209,15 @@ const Sidebar = () => {
           {/* Logo */}
           <div className="flex items-center space-x-3 mb-12">
             <div className="p-2 bg-primary-100 dark:bg-primary-900 rounded-lg">
-              <Code className="h-8 w-8 text-primary-600" />
+              <img
+                src="/logo.png"
+                alt="Code & Coffee Logo"
+                className="h-8 w-8"
+              />
             </div>
             <div>
               <h1 className="text-xl font-bold text-dark-900 dark:text-white">
-                Portfolio
+                Code & Coffee
               </h1>
             </div>
           </div>
@@ -293,7 +301,7 @@ const Sidebar = () => {
             {/* Social links */}
             <div className="flex space-x-3">
               <a
-                href="mailto:your.email@example.com"
+                href="mailto:mukhammadali.kodirov@example.com"
                 className="p-3 bg-gray-100 dark:bg-dark-700 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900 transition-colors duration-200"
                 aria-label="Email"
               >

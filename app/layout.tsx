@@ -7,7 +7,7 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Your Name - Portfolio",
+  title: "Code & Coffee - Portfolio",
   description:
     "Full-stack developer passionate about creating amazing digital experiences",
   keywords: [
@@ -16,10 +16,18 @@ export const metadata: Metadata = {
     "web development",
     "react",
     "nextjs",
-    "typescript",
+    "code",
+    "coffee",
   ],
-  authors: [{ name: "Your Name" }],
+  authors: [{ name: "Mukhammadali Kodirov" }],
   viewport: "width=device-width, initial-scale=1",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "16x16", type: "image/x-icon" },
+      { url: "/logo.png", sizes: "any", type: "image/png" },
+    ],
+    apple: { url: "/logo.png", type: "image/png" },
+  },
 };
 
 export default function RootLayout({

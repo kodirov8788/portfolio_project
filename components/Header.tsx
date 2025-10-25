@@ -55,7 +55,7 @@ const Header = () => {
           {/* Social Links & Theme Toggle */}
           <div className="hidden md:flex items-center space-x-4">
             <a
-              href="mailto:your.email@example.com"
+              href="mailto:mukhammadali.kodirov@example.com"
               className="p-2 text-dark-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200"
               aria-label="Email"
             >
@@ -122,7 +122,7 @@ const Header = () => {
               <div className="flex items-center justify-between px-3 py-2">
                 <div className="flex items-center space-x-4">
                   <a
-                    href="mailto:your.email@example.com"
+                    href="mailto:mukhammadali.kodirov@example.com"
                     className="p-2 text-dark-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200"
                     aria-label="Email"
                   >
