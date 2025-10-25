@@ -1,0 +1,7 @@
+---
+description: do not build project after completing tasks, just do tsc --noEmit
+globs:
+alwaysApply: true
+---
+
+do not build project after completing tasks, just do tsc --noEmit

@@ -2,60 +2,70 @@
 
 ---
 
-## **Portfolio Development Protocol**
+## **Mission Briefing: Standard Operating Protocol**
 
-You will now execute this request following streamlined protocols for a Vite + React + TypeScript portfolio project.
-
----
-
-## **Phase 1: Understanding & Planning**
-
-- **Directive:** Quickly understand the current portfolio structure and plan your approach.
-- **Actions:**
-  1. **Review Project Structure:** Check components/, views/, constants.tsx, types.ts
-  2. **Identify Impact:** List all files that need modification
-  3. **Plan Implementation:** Create step-by-step approach
-- **Output:** Brief plan with specific files to modify
+You will now execute this request in full compliance with your **AUTONOMOUS PRINCIPAL ENGINEER - OPERATIONAL DOCTRINE.** Each phase is mandatory. Deviations are not permitted.
 
 ---
 
-## **Phase 2: Implementation**
+## **Phase 0: Reconnaissance & Mental Modeling (Read-Only)**
 
-- **Directive:** Execute your plan with clean, maintainable code.
-- **Core Protocols:**
-  - **TypeScript First:** Use proper types, avoid `any`
-  - **Component Structure:** Follow existing patterns in components/ and views/
-  - **Constants Management:** Update constants.tsx for data changes
-  - **Clean Code:** Write self-documenting code with descriptive names
+- **Directive:** Perform a non-destructive scan of the entire repository to build a complete, evidence-based mental model of the current system architecture, dependencies, and established patterns.
+- **Output:** Produce a concise digest (≤ 200 lines) of your findings. This digest will anchor all subsequent actions.
+- **Constraint:** **No mutations are permitted during this phase.**
 
 ---
 
-## **Phase 3: Verification**
+## **Phase 1: Planning & Strategy**
 
-- **Directive:** Ensure everything works correctly.
+- **Directive:** Based on your reconnaissance, formulate a clear, incremental execution plan.
+- **Plan Requirements:**
+  1.  **Restate Objectives:** Clearly define the success criteria for this request.
+  2.  **Identify Full Impact Surface:** Enumerate **all** files, components, services, and user workflows that will be directly or indirectly affected. This is a test of your system-wide thinking.
+  3.  **Justify Strategy:** Propose a technical approach. Explain _why_ it is the best choice, considering its alignment with existing patterns, maintainability, and simplicity.
+- **Constraint:** Invoke the **Clarification Threshold** from your Doctrine only if you encounter a critical ambiguity that cannot be resolved through further research.
+
+---
+
+## **Phase 2: Execution & Implementation**
+
+- **Directive:** Execute your plan incrementally. Adhere strictly to all protocols defined in your **Operational Doctrine.**
+- **Core Protocols in Effect:**
+  - **Read-Write-Reread:** For every file you modify, you must read it immediately before and immediately after the change.
+  - **Command Execution Canon:** All shell commands must be executed using the mandated safety wrapper.
+  - **Workspace Purity:** All transient analysis and logs remain in-chat. No unsolicited files.
+  - **System-Wide Ownership:** If you modify a shared component, you are **MANDATED** to identify and update **ALL** its consumers in this same session.
+
+---
+
+## **Phase 3: Verification & Autonomous Correction**
+
+- **Directive:** Rigorously validate your changes with fresh, empirical evidence.
 - **Verification Steps:**
-  1. **Type Check:** Run `tsc --noEmit` to verify TypeScript
-  2. **Build Test:** Run `npm run build` to ensure no build errors
-  3. **Manual Test:** Check the feature works in browser
-  4. **Code Review:** Ensure code follows project patterns
+  1.  Execute all relevant quality gates (unit tests, integration tests, linters, etc.).
+  2.  If any gate fails, you will **autonomously diagnose and fix the failure,** reporting the cause and the fix.
+  3.  Perform end-to-end testing of the primary user workflow(s) affected by your changes.
 
 ---
 
-## **Phase 4: Final Check**
+## **Phase 4: Mandatory Zero-Trust Self-Audit**
 
-- **Directive:** Verify the implementation is complete and clean.
-- **Final Steps:**
-  1. **Clean Code:** Remove any unused imports or code
-  2. **Consistent Styling:** Follow existing Tailwind CSS patterns
-  3. **Documentation:** Add comments for complex logic
-  4. **File Organization:** Ensure files are in correct directories
+- **Directive:** Your primary implementation is complete, but your work is **NOT DONE.** You will now reset your thinking and conduct a skeptical, zero-trust audit of your own work. Your memory is untrustworthy; only fresh evidence is valid.
+- **Audit Protocol:**
+  1.  **Re-verify Final State:** With fresh commands, confirm the Git status is clean, all modified files are in their intended final state, and all relevant services are running correctly.
+  2.  **Hunt for Regressions:** Explicitly test at least one critical, related feature that you did _not_ directly modify to ensure no unintended side effects were introduced.
+  3.  **Confirm System-Wide Consistency:** Double-check that all consumers of any changed component are working as expected.
 
 ---
 
-## **Final Report**
+## **Phase 5: Final Report & Verdict**
 
-- **Changes Applied:** List of modified files
-- **Verification:** TypeScript check and build status
-- **Result:** Feature working as expected
-
-**Maintain inline progress using ✅ / ⚠️ / 🚧 markers throughout the process.**
+- **Directive:** Conclude your mission with a single, structured report.
+- **Report Structure:**
+  - **Changes Applied:** A list of all created or modified artifacts.
+  - **Verification Evidence:** The commands and outputs from your autonomous testing and self-audit, proving the system is healthy.
+  - **System-Wide Impact Statement:** A confirmation that all identified dependencies have been checked and are consistent.
+  - **Final Verdict:** Conclude with one of the two following statements, exactly as written:
+    - `"Self-Audit Complete. System state is verified and consistent. No regressions identified. Mission accomplished."`
+    - `"Self-Audit Complete. CRITICAL ISSUE FOUND. Halting work. [Describe issue and recommend immediate diagnostic steps]."`
+- **Constraint:** Maintain an inline TODO ledger using ✅ / ⚠️ / 🚧 markers throughout the process.

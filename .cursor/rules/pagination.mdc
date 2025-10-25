@@ -1,0 +1,443 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+
+# AutoReachPro Standardization Guide
+
+## Overview
+
+This guide documents the standardized patterns for pagination, filtering, and API responses used throughout the AutoReachPro application. **Updated**: Removed unused `timeLimit` parameter, standardized to page-based pagination only, added comprehensive radius testing.
+
+## 🆕 Recent Updates
+
+- ✅ **Removed `timeLimit` parameter** - Was unused in API logic, only stored in search history
+- ✅ **Standardized pagination** - Now uses only `page` and `pageSize` query parameters
+- ✅ **Enhanced radius testing** - Added comprehensive 1km, 2km, 5km, 10km radius validation
+- ✅ **Improved error handling** - Better validation for invalid pagination parameters
+- ✅ **Updated Postman collection** - Comprehensive test coverage for all features
+
+## 🏗️ Architecture
+
+### Core Components
+
+1. **Types** (`/src/types/api.ts`) - Standardized TypeScript interfaces
+2. **Pagination Utils** (`/src/lib/pagination.ts`) - Database query pagination
+3. **Filter Utils** (`/src/lib/filters.ts`) - Query filtering and validation
+4. **API Responses** (`/src/lib/api-responses.ts`) - Standardized response formats
+5. **Query Builder** (`/src/lib/query-builder.ts`) - High-level query construction
+6. **React Hooks** (`/src/hooks/`) - Client-side state management
+
+## 📋 API Response Standard
+
+### Success Response
+
+```typescript
+{
+  success: true,
+  data: T,
+  message?: string,
+  meta: {
+    timestamp: string,
+    requestId?: string,
+    pagination?: PaginationMeta,
+    filters?: Record<string, any>,
+    sort?: SortOptions,
+    search?: SearchOptions
+  }
+}
+```
+
+### Error Response
+
+```typescript
+{
+  success: false,
+  error: string,
+  code?: string,
+  details?: Record<string, any>
+}
+```
+
+## 🔢 Pagination
+
+### URL Parameters (Standardized)
+
+- `page` - Current page number (default: 1, min: 1)
+- `pageSize` - Items per page (default: 10, max: 1000, min: 1)
+
+**⚠️ Deprecated Parameters (Removed):**
+
+- ~~`offset`~~ - No longer supported, use `page` instead
+- ~~`limit`~~ - No longer supported, use `pageSize` instead
+- ~~`timeLimit`~~ - Removed as it was unused in API logic
+
+### Standard Pagination
+
+- **Traditional numbered pagination**: Shows page numbers (1, 2, 3, 4, 5, 6, 7, 8, 9, 10...)
+- **Previous/Next buttons**: Navigate between pages
+- **Page size selector**: Allow users to choose items per page (10, 20, 50, 100)
+- **No "Load More" button**: Standard pagination uses numbered pages for all navigation
+- **Ellipsis support**: Show "..." for large page ranges (1, 2, 3, ..., 8, 9, 10)
+
+### Usage in API Routes (Updated)
+
+```typescript
+import {
+  extractPaginationFromSearchParams,
+  buildPaginationMeta,
+} from "@/lib/pagination";
+
+export async function GET(request: NextRequest) {
+  const searchParams = new URL(request.url).searchParams;
+
+  // Extract standardized pagination parameters
+  const page = parseInt(searchParams.get("page") || "1");
+  const pageSize = parseInt(searchParams.get("pageSize") || "10");
+
+  // Validate pagination parameters
+  if (page < 1 || pageSize < 1 || pageSize > 1000) {
+    return NextResponse.json(
+      {
+        success: false,
+        error:
+          "Invalid pagination parameters. Page must be >= 1, pageSize must be between 1-1000",
+      },
+      { status: 400 }
+    );
+  }
+
+  const pagination = { page, pageSize };
+  const result = await queryBuilder.queryBusinesses({ pagination });
+
+  return createPaginatedResponse(data, result.pagination);
+}
+```
+
+## 🔍 Filtering
+
+### Common Filter Fields
+
+- `search` - Full-text search query
+- `category` - Category filter (e.g., "restaurant", "cafe", "all")
+- `region` - Geographic region
+- `status` - Status filter
+- `dateFrom` / `dateTo` - Date range
+- `isVerified` - Boolean verification status
+- `radius` - Search radius in kilometers (default: 5, range: 1-100)
+- `coordinates` - Array of lat/lng coordinates for location-based search
+- `prefectures` - Array of prefecture names for region filtering
+
+### URL Parameters
+
+```
+GET /api/businesses?category=restaurant&region=Tokyo&isVerified=true&search=cafe&page=1&pageSize=10
+```
+
+### Request Body Parameters (POST)
+
+```json
+{
+  "coordinates": [{ "lat": 35.6762, "lng": 139.6503 }],
+  "prefectures": ["Tokyo"],
+  "category": "restaurant",
+  "keywords": "cafe",
+  "maxResults": 20,
+  "radius": 5
+}
+```
+
+### Advanced Search
+
+```typescript
+const searchOptions = {
+  query: "coffee shop",
+  fields: ["name", "category", "address"],
+  mode: "insensitive", // or "sensitive"
+};
+```
+
+## 📊 Sorting
+
+### URL Parameters
+
+- `sortBy` - Field to sort by (default: "createdAt", options: "distance", "name", "category")
+- `sortOrder` - "asc" or "desc" (default: "desc")
+
+### Allowed Fields
+
+Configure allowed sort fields to prevent SQL injection:
+
+```typescript
+const sorting = useSorting({
+  allowedFields: ["name", "category", "createdAt", "updatedAt", "distance"],
+});
+```
+
+### Distance Sorting
+
+When coordinates are provided, results can be sorted by distance:
+
+```typescript
+// Sort by distance (ascending = closest first)
+GET /api/integrated-search?sortBy=distance&sortOrder=asc
+
+// Sort by distance (descending = farthest first)
+GET /api/integrated-search?sortBy=distance&sortOrder=desc
+```
+
+## 🎣 React Hooks
+
+### usePagination
+
+```typescript
+const { page, isLoadMore, gotoPage, loadMore, displayCount } = usePagination({
+  initialPage: 1,
+  pageSize: 10, // Updated default
+  totalCount: 1000,
+  maxPagesBeforeLoadMore: 6,
+});
+```
+
+### useFilters
+
+```typescript
+const { filters, setFilter, clearFilters, hasFilters, activeFilterCount } =
+  useFilters({
+    initialFilters: { category: "restaurant" },
+  });
+
+// Set a filter
+setFilter("region", "Tokyo");
+
+// Clear all filters
+clearFilters();
+```
+
+### useDataTable (Combined Hook)
+
+```typescript
+const { filters, sorting, queryParams, hasActiveFilters } = useDataTable({
+  initialFilters: { category: "" },
+  initialSort: { field: "createdAt", direction: "desc" },
+  allowedFields: ["name", "category", "createdAt"],
+});
+```
+
+## 🛠️ Query Builder
+
+### Basic Usage
+
+```typescript
+import { getQueryBuilder } from "@/lib/query-builder";
+
+const queryBuilder = getQueryBuilder(prisma);
+
+const result = await queryBuilder.queryBusinesses({
+  pagination: { page: 1, pageSize: 10 }, // Updated default
+  filters: { category: "restaurant", region: "Tokyo", radius: 5 },
+  sort: { field: "name", direction: "asc" },
+  search: { query: "cafe", fields: ["name", "category"] },
+  coordinates: [{ lat: 35.6762, lng: 139.6503 }], // For distance calculation
+});
+```
+
+### Specialized Builders
+
+- `queryBusinesses()` - Business-specific queries
+- `queryContactGroups()` - Contact group queries
+- `querySearchHistory()` - Search history queries
+
+## 🚀 Quick Start Examples
+
+### 1. Simple API Route
+
+```typescript
+export async function GET(request: NextRequest) {
+  const queryOptions = extractQueryOptionsFromRequest(request);
+  const result = await queryBuilder.queryBusinesses(queryOptions);
+
+  return createPaginatedResponse(result.data, result.pagination, {
+    message: `Found ${result.total} businesses`,
+    meta: {
+      radius: queryOptions.filters?.radius || 5,
+      coordinates: queryOptions.coordinates,
+      sortBy: queryOptions.sort?.field,
+      sortOrder: queryOptions.sort?.direction,
+    },
+  });
+}
+```
+
+### 2. React Component
+
+```typescript
+function BusinessList() {
+  const pagination = usePagination({ totalCount: 1000 });
+  const filters = useFilters({ initialFilters: { category: "" } });
+
+  useEffect(() => {
+    fetchBusinesses();
+  }, [pagination.page, filters.filters]);
+
+  // ... component logic
+}
+```
+
+## 📈 Benefits
+
+### For Developers
+
+- **Consistency** - Standardized patterns across all endpoints
+- **Type Safety** - Full TypeScript support with IntelliSense
+- **Maintainability** - Centralized logic, easier to update
+- **Testing** - Predictable behavior for unit tests
+
+### For API Consumers
+
+- **Predictable** - Consistent response formats
+- **Flexible** - Support for pagination, filtering, and sorting
+- **Efficient** - Optimized database queries
+- **Scalable** - Handles large datasets with cursor pagination
+
+## 🔧 Migration Guide
+
+### Updating Existing API Routes
+
+1. **Import utilities:**
+
+```typescript
+import {
+  extractQueryOptionsFromRequest,
+  validateQueryOptions,
+} from "@/lib/query-builder";
+import {
+  createPaginatedResponse,
+  createErrorResponse,
+} from "@/lib/api-responses";
+```
+
+2. **Replace manual parameter extraction:**
+
+```typescript
+// Before
+const page = parseInt(searchParams.get("page") || "1");
+const category = searchParams.get("category");
+
+// After
+const queryOptions = extractQueryOptionsFromRequest(request);
+const validation = validateQueryOptions(queryOptions);
+```
+
+3. **Use standardized responses:**
+
+```typescript
+// Before
+return NextResponse.json({ data, total });
+
+// After
+return createPaginatedResponse(data, pagination, { message: "Success" });
+```
+
+### Updating React Components
+
+1. **Replace custom pagination logic:**
+
+```typescript
+// Before
+const [page, setPage] = useState(1);
+
+// After
+const { page, gotoPage, isLoadMore, loadMore } = usePagination();
+```
+
+2. **Use standardized filtering:**
+
+```typescript
+// Before
+const [category, setCategory] = useState("");
+
+// After
+const { filters, setFilter } = useFilters();
+```
+
+## 🐛 Error Handling
+
+### Validation Errors
+
+```typescript
+const validation = validateQueryOptions(queryOptions);
+if (!validation.isValid) {
+  return createErrorResponse("Invalid parameters", {
+    code: "VALIDATION_ERROR",
+    details: { errors: validation.errors },
+  });
+}
+```
+
+### Database Errors
+
+```typescript
+try {
+  const result = await prisma.business.findMany(query);
+  return createSuccessResponse(result);
+} catch (error) {
+  return createErrorResponse("Database error", { status: 500 });
+}
+```
+
+## 📚 Best Practices
+
+1. **Always validate input parameters** - Especially pagination (page >= 1, pageSize 1-1000)
+2. **Use TypeScript interfaces for type safety** - Define clear interfaces for all API responses
+3. **Handle edge cases** - Empty results, invalid pages, coordinate filtering
+4. **Provide meaningful error messages** - Include specific validation errors
+5. **Document API parameters in comments** - Especially deprecated parameters
+6. **Use consistent naming conventions** - `page`/`pageSize` not `offset`/`limit`
+7. **Test with various parameter combinations** - Different radii, page sizes, sort orders
+8. **Remove unused parameters** - Don't keep `timeLimit` or other unused fields
+9. **Validate radius values** - Ensure radius is between 1-100km
+10. **Test distance calculations** - Verify Haversine formula accuracy
+
+## 🔗 Related Files
+
+- `/src/types/api.ts` - Core type definitions
+- `/src/lib/pagination.ts` - Pagination utilities
+- `/src/lib/filters.ts` - Filtering utilities
+- `/src/lib/api-responses.ts` - Response helpers
+- `/src/lib/query-builder.ts` - Query construction
+- `/src/hooks/usePagination.ts` - Pagination hook
+- `/src/hooks/useFilters.ts` - Filtering hooks
+- `/src/app/api/integrated-search/route.ts` - Main search API endpoint
+- `/postman-search-map-tests.json` - Comprehensive test collection
+
+## 🧪 Testing
+
+### Postman Collection Features
+
+- ✅ **Radius Testing**: 1km, 2km, 5km, 10km comprehensive validation
+- ✅ **Pagination Testing**: Page 1, Page 2, large page sizes, invalid parameters
+- ✅ **Distance Sorting**: Ascending/descending distance sorting
+- ✅ **Error Handling**: Invalid pagination, coordinates, radius values
+- ✅ **Performance Testing**: Response time validation for large datasets
+- ✅ **Data Integrity**: Business data structure validation
+
+### Test Coverage
+
+```bash
+# Test different radius values
+curl -X POST "http://localhost:3000/api/integrated-search?page=1&pageSize=5" \
+  -H "Content-Type: application/json" \
+  -d '{"coordinates": [{"lat": 35.695225, "lng": 139.692535}], "radius": 1}'
+
+# Test pagination
+curl -X POST "http://localhost:3000/api/integrated-search?page=2&pageSize=3" \
+  -H "Content-Type: application/json" \
+  -d '{"coordinates": [{"lat": 35.6762, "lng": 139.6503}], "radius": 5}'
+
+# Test distance sorting
+curl -X POST "http://localhost:3000/api/integrated-search?sortBy=distance&sortOrder=asc" \
+  -H "Content-Type: application/json" \
+  -d '{"coordinates": [{"lat": 35.695225, "lng": 139.692535}], "radius": 5}'
+```
