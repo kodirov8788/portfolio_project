@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { ExternalLink, Github, Play, Database, Code, Globe, FileCode, Server } from "lucide-react";
 import { useState } from "react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const Projects = () => {
   const [ref, inView] = useInView({
@@ -12,6 +13,7 @@ const Projects = () => {
   });
 
   const [filter, setFilter] = useState("all");
+  const { resolvedTheme } = useTheme();
 
   const projects = [
     {
@@ -247,11 +249,66 @@ const Projects = () => {
           ))}
         </div>
 
-        {/* Call to action */}
+        {/* GitHub Contributions */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.4 }}
+          className="mt-16"
+        >
+          <div className="text-center mb-8">
+            <h3 className="text-3xl font-bold mb-4 text-dark-900 dark:text-white">
+              <span className="gradient-text">GitHub Contributions</span>
+            </h3>
+            <p className="text-lg text-dark-600 dark:text-gray-300">
+              My coding activity over the past year
+            </p>
+          </div>
+          <div className="bg-white dark:bg-dark-800 rounded-xl shadow-lg p-6 overflow-hidden">
+            <div className="flex justify-center items-center">
+              <img
+                src={`https://github-readme-activity-graph.vercel.app/graph?username=kodirov8788&theme=${resolvedTheme === 'dark' ? 'github-dark' : 'github'}&hide_border=true&area=true`}
+                alt="GitHub Activity Graph"
+                className="w-full max-w-6xl h-auto rounded-lg"
+                style={{ minHeight: '200px' }}
+              />
+            </div>
+          </div>
+          <div className="mt-6 bg-white dark:bg-dark-800 rounded-xl shadow-lg p-6 overflow-hidden">
+            <div className="flex justify-center flex-wrap gap-4">
+              <img
+                src="https://github-readme-stats.vercel.app/api?username=kodirov8788&show_icons=true&theme=default&hide_border=true&bg_color=ffffff&title_color=000000&icon_color=000000&text_color=000000&count_private=true&hide_rank=false"
+                alt="GitHub Stats"
+                className="dark:hidden"
+                style={{ maxWidth: '100%' }}
+              />
+              <img
+                src="https://github-readme-stats.vercel.app/api?username=kodirov8788&show_icons=true&theme=dark&hide_border=true&bg_color=1a1a1a&title_color=ffffff&icon_color=ffffff&text_color=ffffff&count_private=true&hide_rank=false"
+                alt="GitHub Stats"
+                className="hidden dark:block"
+                style={{ maxWidth: '100%' }}
+              />
+              <img
+                src="https://github-readme-stats.vercel.app/api/top-langs/?username=kodirov8788&layout=compact&theme=default&hide_border=true&bg_color=ffffff&title_color=000000&text_color=000000&hide=html"
+                alt="Top Languages"
+                className="dark:hidden"
+                style={{ maxWidth: '100%' }}
+              />
+              <img
+                src="https://github-readme-stats.vercel.app/api/top-langs/?username=kodirov8788&layout=compact&theme=dark&hide_border=true&bg_color=1a1a1a&title_color=ffffff&text_color=ffffff&hide=html"
+                alt="Top Languages"
+                className="hidden dark:block"
+                style={{ maxWidth: '100%' }}
+              />
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Call to action */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.6 }}
           className="text-center mt-16"
         >
           <p className="text-lg text-dark-600 dark:text-gray-300 mb-6">
