@@ -168,13 +168,13 @@ const Sidebar = () => {
 
             {/* Social links */}
             <div className="flex space-x-3">
-              <a
-                href="mailto:mukhammadali.kodirov@example.com"
+              <button
+                onClick={() => scrollToSection("contact")}
                 className="p-3 bg-gray-100 dark:bg-dark-700 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900 transition-colors duration-200"
-                aria-label="Email"
+                aria-label="Contact"
               >
                 <Mail className="h-5 w-5 text-dark-600 dark:text-gray-300" />
-              </a>
+              </button>
               <a
                 href="https://github.com/kodirov8788"
                 target="_blank"
@@ -185,7 +185,7 @@ const Sidebar = () => {
                 <Github className="h-5 w-5 text-dark-600 dark:text-gray-300" />
               </a>
               <a
-                href="https://www.linkedin.com/in/mukhammadalikodirov/"
+                href="https://www.linkedin.com/in/kodirov-dev/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3 bg-gray-100 dark:bg-dark-700 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900 transition-colors duration-200"
@@ -300,13 +300,16 @@ const Sidebar = () => {
 
             {/* Social links */}
             <div className="flex space-x-3">
-              <a
-                href="mailto:mukhammadali.kodirov@example.com"
+              <button
+                onClick={() => {
+                  scrollToSection("contact");
+                  setIsOpen(false);
+                }}
                 className="p-3 bg-gray-100 dark:bg-dark-700 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900 transition-colors duration-200"
-                aria-label="Email"
+                aria-label="Contact"
               >
                 <Mail className="h-5 w-5 text-dark-600 dark:text-gray-300" />
-              </a>
+              </button>
               <a
                 href="https://github.com/kodirov8788"
                 target="_blank"
@@ -317,7 +320,7 @@ const Sidebar = () => {
                 <Github className="h-5 w-5 text-dark-600 dark:text-gray-300" />
               </a>
               <a
-                href="https://www.linkedin.com/in/mukhammadalikodirov/"
+                href="https://www.linkedin.com/in/kodirov-dev/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3 bg-gray-100 dark:bg-dark-700 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900 transition-colors duration-200"

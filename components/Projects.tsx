@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { ExternalLink, Github, Play } from "lucide-react";
+import { ExternalLink, Github, Play, Database, Code, Globe, FileCode, Server } from "lucide-react";
 import { useState } from "react";
 
 const Projects = () => {
@@ -16,85 +16,99 @@ const Projects = () => {
   const projects = [
     {
       id: 1,
-      title: "E-Commerce Platform",
+      title: "Firebase Blogs",
       description:
-        "A full-stack e-commerce solution with payment integration, inventory management, and admin dashboard.",
-      image: "/api/placeholder/600/400",
+        "A full-stack blogging platform built with React and Firebase, featuring real-time updates, authentication, and content management.",
+      gradient: "from-orange-400 via-orange-500 to-yellow-500",
+      icon: Database,
       technologies: [
-        "Next.js",
-        "TypeScript",
-        "Stripe",
-        "PostgreSQL",
-        "Tailwind CSS",
+        "React",
+        "Firebase",
+        "JavaScript",
+        "CSS",
+        "HTML",
       ],
       category: "fullstack",
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com/kodirov8788/project1",
+      liveUrl: undefined,
+      githubUrl: "https://github.com/kodirov8788/firebase-blogs",
       featured: true,
     },
     {
       id: 2,
-      title: "Task Management App",
+      title: "Redux Project",
       description:
-        "A collaborative task management application with real-time updates and team collaboration features.",
-      image: "/api/placeholder/600/400",
-      technologies: ["React", "Node.js", "Socket.io", "MongoDB", "Material-UI"],
-      category: "fullstack",
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com/kodirov8788/project2",
+        "A React application demonstrating advanced Redux state management patterns, including async actions and middleware integration.",
+      gradient: "from-purple-400 via-purple-500 to-pink-500",
+      icon: Code,
+      technologies: ["React", "Redux", "JavaScript", "CSS", "HTML"],
+      category: "frontend",
+      liveUrl: undefined,
+      githubUrl: "https://github.com/kodirov8788/redux-project",
       featured: true,
     },
     {
       id: 3,
-      title: "Weather Dashboard",
+      title: "React Lesson",
       description:
-        "A responsive weather dashboard with location-based forecasts and interactive charts.",
-      image: "/api/placeholder/600/400",
-      technologies: ["Vue.js", "Chart.js", "OpenWeather API", "PWA"],
+        "An educational React project showcasing fundamental concepts and best practices in modern React development.",
+      gradient: "from-blue-400 via-blue-500 to-cyan-500",
+      icon: FileCode,
+      technologies: ["React", "JavaScript", "CSS", "HTML"],
       category: "frontend",
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com/kodirov8788/project3",
+      liveUrl: undefined,
+      githubUrl: "https://github.com/kodirov8788/react-lesson",
       featured: false,
     },
     {
       id: 4,
-      title: "REST API Service",
+      title: "Portfolio Website",
       description:
-        "A scalable REST API with authentication, rate limiting, and comprehensive documentation.",
-      image: "/api/placeholder/600/400",
-      technologies: ["Express.js", "JWT", "Redis", "Swagger", "Docker"],
-      category: "backend",
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com/kodirov8788/project4",
+        "A modern, responsive portfolio website built with Next.js, TypeScript, and Tailwind CSS, featuring dark mode and smooth animations.",
+      gradient: "from-indigo-400 via-indigo-500 to-purple-500",
+      icon: Globe,
+      technologies: [
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "React",
+        "Framer Motion",
+      ],
+      category: "frontend",
+      liveUrl: undefined,
+      githubUrl: "https://github.com/kodirov8788/kodirov8788",
       featured: false,
     },
     {
       id: 5,
-      title: "Mobile Banking App",
+      title: "Backend API Service",
       description:
-        "A secure mobile banking application with biometric authentication and transaction management.",
-      image: "/api/placeholder/600/400",
+        "A scalable REST API built with NestJS and Node.js, featuring authentication, WebSocket support, and MongoDB integration.",
+      gradient: "from-green-400 via-green-500 to-emerald-500",
+      icon: Server,
       technologies: [
-        "React Native",
-        "Redux",
-        "Biometric Auth",
-        "Secure Storage",
+        "NestJS",
+        "Node.js",
+        "MongoDB",
+        "TypeScript",
+        "WebSocket",
+        "Express.js",
       ],
-      category: "mobile",
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com/kodirov8788/project5",
+      category: "backend",
+      liveUrl: undefined,
+      githubUrl: "https://github.com/kodirov8788",
       featured: false,
     },
     {
       id: 6,
-      title: "Data Visualization Tool",
+      title: "Ali's First Project",
       description:
-        "An interactive data visualization platform for analyzing large datasets with custom charts.",
-      image: "/api/placeholder/600/400",
-      technologies: ["D3.js", "Python", "Flask", "Pandas", "WebGL"],
+        "A foundational web development project showcasing HTML, CSS, and JavaScript fundamentals with responsive design.",
+      gradient: "from-pink-400 via-pink-500 to-rose-500",
+      icon: FileCode,
+      technologies: ["HTML", "CSS", "JavaScript"],
       category: "frontend",
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com/kodirov8788/project6",
+      liveUrl: undefined,
+      githubUrl: "https://github.com/kodirov8788/Ali-s-first-project",
       featured: false,
     },
   ];
@@ -167,23 +181,26 @@ const Projects = () => {
             >
               {/* Project image */}
               <div className="relative h-48 overflow-hidden">
-                <div className="w-full h-full bg-gradient-to-br from-primary-100 to-primary-200 dark:from-primary-900 dark:to-primary-800 flex items-center justify-center">
-                  <Play className="h-16 w-16 text-primary-600 opacity-50" />
+                <div className={`w-full h-full bg-gradient-to-br ${project.gradient} dark:opacity-90 flex items-center justify-center relative`}>
+                  <project.icon className="h-20 w-20 text-white opacity-80 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
                 </div>
                 <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300" />
 
                 {/* Overlay buttons */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <div className="flex space-x-4">
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-3 bg-white dark:bg-dark-700 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110"
-                      aria-label="View live demo"
-                    >
-                      <ExternalLink className="h-5 w-5 text-primary-600" />
-                    </a>
+                    {project.liveUrl && (
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-3 bg-white dark:bg-dark-700 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-110"
+                        aria-label="View live demo"
+                      >
+                        <ExternalLink className="h-5 w-5 text-primary-600" />
+                      </a>
+                    )}
                     <a
                       href={project.githubUrl}
                       target="_blank"
