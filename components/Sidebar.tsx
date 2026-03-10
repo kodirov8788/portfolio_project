@@ -73,6 +73,9 @@ const Sidebar = () => {
       return;
     }
 
+    // Update URL hash without forcing a page jump
+    window.history.pushState(null, "", `/#${sectionId}`);
+
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({
@@ -80,6 +83,9 @@ const Sidebar = () => {
         block: "start",
       });
     }
+    
+    // Optimistic update for immediate feedback
+    setActiveSection(sectionId);
     setIsOpen(false);
   };
 
@@ -97,6 +103,14 @@ const Sidebar = () => {
       const itemsToTrack = navItems.filter(item => item.type === "internal");
       const sections = itemsToTrack.map((item) => document.getElementById(item.id));
       const scrollPosition = window.scrollY + 100;
+
+      // Check if user has scrolled to the absolute bottom
+      const isBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 50;
+      
+      if (isBottom && itemsToTrack.length > 0) {
+        setActiveSection(itemsToTrack[itemsToTrack.length - 1].id);
+        return;
+      }
 
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = sections[i];
