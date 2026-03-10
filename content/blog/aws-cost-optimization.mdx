@@ -1,0 +1,27 @@
+---
+title: "Why I optimized our AWS dev stack for cost and velocity"
+date: "2026-03-09"
+summary: "How switching to local-first development and implementing resource scheduling saved 30% on monthly AWS costs while increasing dev velocity."
+tags: ["AWS", "DevOps", "Backend", "NodeJS", "CostOptimization"]
+---
+
+While building backend services for our recent production projects, I noticed a common "cloud-first" inefficiency: using RDS Proxies in development. 
+
+This created three hidden costs:
+1. High AWS monthly spend for idle database instances.
+2. Unnecessary network latency during the dev cycle.
+3. Over-dependency on cloud connectivity for basic local tasks.
+
+## 🛠 The Solution
+I implemented a two-fold engineering shift to prioritize efficiency:
+
+1. **Local-First Development:** We moved to containerized local databases for the development phase. This eliminated the RDS Proxy cost and reduced database latency to near-zero for the dev team.
+2. **Infrastructure Scheduling:** For shared staging/dev environments, I implemented an AWS Lambda scheduler to automate instance uptime. Resources now only run during Tokyo working hours, spinning down automatically at night and on weekends.
+
+## ⚖️ The Trade-offs
+By moving to local DBs, we had to ensure our local schemas stayed perfectly in sync with production via Prisma migrations. The small overhead of maintaining local environments was a trade-off I accepted to gain **30% monthly savings** and significantly faster iteration cycles.
+
+## 🚀 Engineering Lesson
+Don't use "Enterprise" cloud features in development just because they exist in production. Aim for **parity of data**, not necessarily **parity of infrastructure**, if the cost doesn't justify the benefit during the development lifecycle.
+
+#BackendEngineering #AWS #CloudCost #NodeJS #DevOps #EngineeringManagement

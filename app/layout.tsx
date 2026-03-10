@@ -3,23 +3,25 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
 import { ThemeProvider } from "@/contexts/ThemeContext";
+import { siteConfig } from "@/config/site";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Code & Coffee - Portfolio",
-  description:
-    "Full-stack developer passionate about creating amazing digital experiences",
+  title: {
+    default: siteConfig.name,
+    template: `%s | ${siteConfig.name}`,
+  },
+  description: siteConfig.description,
   keywords: [
     "portfolio",
-    "developer",
-    "web development",
-    "react",
-    "nextjs",
-    "code",
-    "coffee",
+    "backend engineer",
+    "distributed systems",
+    "AWS",
+    "Go",
+    "Technical Leadership",
   ],
-  authors: [{ name: "Mukhammadali Kodirov" }],
+  authors: [{ name: siteConfig.author }],
   viewport: "width=device-width, initial-scale=1",
   icons: {
     icon: [

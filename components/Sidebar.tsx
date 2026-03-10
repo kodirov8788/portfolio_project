@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import {
   Home,
@@ -17,6 +18,7 @@ import {
   Github,
 } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
+import { siteConfig } from "@/config/site";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,11 +26,42 @@ const Sidebar = () => {
   const { theme, resolvedTheme, setTheme, toggleTheme } = useTheme();
 
   const navItems = [
-    { id: "home", name: "Home", icon: Home },
-    { id: "about", name: "About", icon: User },
-    { id: "projects", name: "Projects", icon: FolderOpen },
-    { id: "contact", name: "Contact", icon: Mail },
+    { id: "home", name: "Home", icon: Home, type: "internal" },
+    { id: "about", name: "About", icon: User, type: "internal" },
+    { id: "projects", name: "Projects", icon: FolderOpen, type: "internal" },
+    { id: "blog", name: "Blog", icon: Code, type: "external", href: "/blog" },
+    { id: "contact", name: "Contact", icon: Mail, type: "internal" },
   ];
+
+  const NavLink = ({ item }: { item: typeof navItems[0] }) => {
+    const isInternal = item.type === "internal";
+    const isActive = activeSection === item.id;
+
+    const content = (
+      <div className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+        isActive
+          ? "bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 shadow-md"
+          : "text-dark-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-700 hover:text-primary-600 dark:hover:text-primary-400"
+      }`}>
+        <item.icon className="h-5 w-5" />
+        <span className="font-medium">{item.name}</span>
+      </div>
+    );
+
+    if (isInternal) {
+      return (
+        <button onClick={() => scrollToSection(item.id)} className="w-full">
+          {content}
+        </button>
+      );
+    }
+
+    return (
+      <Link href={item.href || "/"} className="w-full">
+        {content}
+      </Link>
+    );
+  };
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -95,17 +128,7 @@ const Sidebar = () => {
             <ul className="space-y-2">
               {navItems.map((item) => (
                 <li key={item.id}>
-                  <button
-                    onClick={() => scrollToSection(item.id)}
-                    className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
-                      activeSection === item.id
-                        ? "bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 shadow-md"
-                        : "text-dark-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-700 hover:text-primary-600 dark:hover:text-primary-400"
-                    }`}
-                  >
-                    <item.icon className="h-5 w-5" />
-                    <span className="font-medium">{item.name}</span>
-                  </button>
+                  <NavLink item={item} />
                 </li>
               ))}
             </ul>
@@ -227,17 +250,7 @@ const Sidebar = () => {
             <ul className="space-y-2">
               {navItems.map((item) => (
                 <li key={item.id}>
-                  <button
-                    onClick={() => scrollToSection(item.id)}
-                    className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
-                      activeSection === item.id
-                        ? "bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 shadow-md"
-                        : "text-dark-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-700 hover:text-primary-600 dark:hover:text-primary-400"
-                    }`}
-                  >
-                    <item.icon className="h-5 w-5" />
-                    <span className="font-medium">{item.name}</span>
-                  </button>
+                  <NavLink item={item} />
                 </li>
               ))}
             </ul>
@@ -311,7 +324,7 @@ const Sidebar = () => {
                 <Mail className="h-5 w-5 text-dark-600 dark:text-gray-300" />
               </button>
               <a
-                href="https://github.com/kodirov8788"
+                href={siteConfig.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3 bg-gray-100 dark:bg-dark-700 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900 transition-colors duration-200"
@@ -320,7 +333,7 @@ const Sidebar = () => {
                 <Github className="h-5 w-5 text-dark-600 dark:text-gray-300" />
               </a>
               <a
-                href="https://www.linkedin.com/in/kodirov-dev/"
+                href={siteConfig.links.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3 bg-gray-100 dark:bg-dark-700 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900 transition-colors duration-200"

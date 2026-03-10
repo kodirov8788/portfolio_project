@@ -10,9 +10,13 @@
     "stop": "kill-port 3000 3001 3002 3003 3004 3005"
   },
   "dependencies": {
+    "@tailwindcss/typography": "^0.5.19",
+    "contentlayer": "^0.3.4",
+    "date-fns": "^4.1.0",
     "framer-motion": "^10.16.16",
     "lucide-react": "^0.294.0",
     "next": "14.0.4",
+    "next-contentlayer": "^0.3.4",
     "react": "^18",
     "react-dom": "^18",
     "react-intersection-observer": "^9.5.3"
