@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import {
   Home,
@@ -22,6 +23,8 @@ import { siteConfig } from "@/config/site";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
   const [activeSection, setActiveSection] = useState("home");
   const { theme, resolvedTheme, setTheme, toggleTheme } = useTheme();
 
@@ -64,6 +67,12 @@ const Sidebar = () => {
   };
 
   const scrollToSection = (sectionId: string) => {
+    if (pathname !== "/") {
+      router.push(`/#${sectionId}`);
+      setIsOpen(false);
+      return;
+    }
+
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({
@@ -74,24 +83,34 @@ const Sidebar = () => {
     setIsOpen(false);
   };
 
-  // Track active section based on scroll position
+  // Track active section based on scroll position or route
   useEffect(() => {
+    if (pathname.startsWith("/blog")) {
+      setActiveSection("blog");
+      return;
+    }
+
     const handleScroll = () => {
-      const sections = navItems.map((item) => document.getElementById(item.id));
+      // Only run scroll tracking on the home page
+      if (pathname !== "/") return;
+
+      const itemsToTrack = navItems.filter(item => item.type === "internal");
+      const sections = itemsToTrack.map((item) => document.getElementById(item.id));
       const scrollPosition = window.scrollY + 100;
 
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = sections[i];
         if (section && section.offsetTop <= scrollPosition) {
-          setActiveSection(navItems[i].id);
+          setActiveSection(itemsToTrack[i].id);
           break;
         }
       }
     };
 
+    handleScroll(); // Initial check
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [pathname]);
 
   return (
     <>
@@ -112,13 +131,13 @@ const Sidebar = () => {
             <div className="p-2 bg-primary-100 dark:bg-primary-900 rounded-lg">
               <img
                 src="/logo.png"
-                alt="Code & Coffee Logo"
+                alt={`${siteConfig.name} Logo`}
                 className="h-8 w-8"
               />
             </div>
             <div>
               <h1 className="text-xl font-bold text-dark-900 dark:text-white">
-                Code & Coffee
+                {siteConfig.name}
               </h1>
             </div>
           </div>
@@ -199,7 +218,7 @@ const Sidebar = () => {
                 <Mail className="h-5 w-5 text-dark-600 dark:text-gray-300" />
               </button>
               <a
-                href="https://github.com/kodirov8788"
+                href={siteConfig.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3 bg-gray-100 dark:bg-dark-700 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900 transition-colors duration-200"
@@ -208,7 +227,7 @@ const Sidebar = () => {
                 <Github className="h-5 w-5 text-dark-600 dark:text-gray-300" />
               </a>
               <a
-                href="https://www.linkedin.com/in/kodirov-dev/"
+                href={siteConfig.links.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3 bg-gray-100 dark:bg-dark-700 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900 transition-colors duration-200"
@@ -234,13 +253,13 @@ const Sidebar = () => {
             <div className="p-2 bg-primary-100 dark:bg-primary-900 rounded-lg">
               <img
                 src="/logo.png"
-                alt="Code & Coffee Logo"
+                alt={`${siteConfig.name} Logo`}
                 className="h-8 w-8"
               />
             </div>
             <div>
               <h1 className="text-xl font-bold text-dark-900 dark:text-white">
-                Code & Coffee
+                {siteConfig.name}
               </h1>
             </div>
           </div>
