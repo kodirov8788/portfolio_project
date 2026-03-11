@@ -2,7 +2,7 @@ export const siteConfig = {
   name: "Code & Coffee",
   description: "Senior Backend Engineer specialized in high-performance distributed systems, AWS cost optimization, and technical leadership.",
   author: "Kodirovdev",
-  url: "https://your-portfolio-url.com",
+  url: "https://www.muhammadali.pro",
   links: {
     github: "https://github.com/kodirov8788",
     linkedin: "https://www.linkedin.com/in/kodirov-dev/",
