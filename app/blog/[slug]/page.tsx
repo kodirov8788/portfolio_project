@@ -15,9 +15,31 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const post = allPosts.find((p) => p.slug === params.slug)
   if (!post) return {}
+  
+  // You can dynamically resolve images if they are in the frontmatter, otherwise use a fallback
+  const ogImage = post.image || '/logo.png'; 
+  
   return { 
     title: `${post.title} - ${siteConfig.name}`,
-    description: post.summary
+    description: post.summary,
+    openGraph: {
+      title: post.title,
+      description: post.summary,
+      type: "article",
+      publishedTime: post.date,
+      url: `${siteConfig.url}/blog/${post.slug}`,
+      images: [
+        {
+          url: ogImage,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.summary,
+      images: [ogImage],
+    },
   }
 }
 

@@ -8,6 +8,7 @@ import { siteConfig } from "@/config/site";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
   title: {
     default: siteConfig.name,
     template: `%s | ${siteConfig.name}`,
@@ -29,6 +30,29 @@ export const metadata: Metadata = {
       { url: "/logo.png", sizes: "any", type: "image/png" },
     ],
     apple: { url: "/logo.png", type: "image/png" },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: siteConfig.url,
+    title: siteConfig.name,
+    description: siteConfig.description,
+    siteName: siteConfig.name,
+    images: [
+      {
+        url: "/logo.png", // Fallback image
+        width: 1200,
+        height: 630,
+        alt: siteConfig.name,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.name,
+    description: siteConfig.description,
+    images: ["/logo.png"],
+    creator: "@kodirovdev", // Optional, replace with your actual handle
   },
 };
 
