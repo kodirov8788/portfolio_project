@@ -41,9 +41,9 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider defaultTheme="system" storageKey="portfolio-theme">
-          <div className="flex min-h-screen bg-gray-50 dark:bg-dark-900">
+          <div className="flex min-h-screen w-full bg-gray-50 dark:bg-dark-900 overflow-hidden">
             <Sidebar />
-            <main className="flex-1 overflow-y-auto md:ml-80">{children}</main>
+            <main className="flex-1 w-full min-w-0 md:ml-80">{children}</main>
           </div>
         </ThemeProvider>
       </body>
