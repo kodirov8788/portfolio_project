@@ -17,7 +17,7 @@ export default function BlogSection() {
 
   return (
     <section id="blog" className="py-20 bg-gray-50 dark:bg-dark-800 border-t border-gray-200 dark:border-dark-700">
-      <div className="container mx-auto px-8 sm:px-12 lg:px-16" ref={ref}>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8" ref={ref}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}

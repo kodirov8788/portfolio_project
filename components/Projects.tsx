@@ -130,7 +130,7 @@ const Projects = () => {
 
   return (
     <section id="projects" className="py-20 bg-gray-50 dark:bg-dark-800">
-      <div className="container mx-auto px-8 sm:px-12 lg:px-16">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 20 }}
