@@ -38,7 +38,7 @@ const Hero = () => {
               <span className="gradient-text">Hello, I'm</span>
               <br />
               <span className="text-dark-900 dark:text-white">
-                Mukhammadali Kodirov
+                Mukhammadali
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-dark-600 dark:text-gray-300 mb-8 leading-relaxed">
