@@ -31,9 +31,9 @@ const Sidebar = () => {
   const navItems = [
     { id: "home", name: "Home", icon: Home, type: "internal" },
     { id: "about", name: "About", icon: User, type: "internal" },
-    { id: "projects", name: "Projects", icon: FolderOpen, type: "internal" },
-    { id: "blog", name: "Blog", icon: Code, type: "external", href: "/blog" },
-    { id: "contact", name: "Contact", icon: Mail, type: "internal" },
+    { id: "projects", name: "Projects", icon: FolderOpen, type: "internal", href: "" },
+    { id: "blog", name: "Blog", icon: Code, type: "internal", href: "" },
+    { id: "contact", name: "Contact", icon: Mail, type: "internal", href: "" },
   ];
 
   const NavLink = ({ item }: { item: typeof navItems[0] }) => {
