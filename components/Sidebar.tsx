@@ -60,7 +60,14 @@ const Sidebar = () => {
     }
 
     return (
-      <Link href={item.href || "/"} className="w-full">
+      <Link 
+        href={item.href || "/"} 
+        className="w-full"
+        onClick={() => {
+          setIsOpen(false);
+          setActiveSection(item.id);
+        }}
+      >
         {content}
       </Link>
     );
@@ -68,7 +75,9 @@ const Sidebar = () => {
 
   const scrollToSection = (sectionId: string) => {
     if (pathname !== "/") {
-      router.push(`/#${sectionId}`);
+      // Store the target section to smooth scroll after navigation completes
+      sessionStorage.setItem("pendingScroll", sectionId);
+      router.push("/");
       setIsOpen(false);
       return;
     }
@@ -94,6 +103,22 @@ const Sidebar = () => {
     if (pathname.startsWith("/blog")) {
       setActiveSection("blog");
       return;
+    }
+
+    // Handle cross-page smooth scroll instructions
+    if (pathname === "/") {
+      const pendingScroll = sessionStorage.getItem("pendingScroll");
+      if (pendingScroll) {
+        sessionStorage.removeItem("pendingScroll");
+        setTimeout(() => {
+          const element = document.getElementById(pendingScroll);
+          if (element) {
+            window.history.pushState(null, "", `/#${pendingScroll}`);
+            element.scrollIntoView({ behavior: "smooth", block: "start" });
+            setActiveSection(pendingScroll);
+          }
+        }, 100);
+      }
     }
 
     const handleScroll = () => {
