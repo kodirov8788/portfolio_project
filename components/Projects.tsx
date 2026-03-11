@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { ExternalLink, Github, Play, Database, Code, Globe, FileCode, Server } from "lucide-react";
+import Image from "next/image";
 import { useState } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 
@@ -21,8 +22,7 @@ const Projects = () => {
       title: "Firebase Blogs",
       description:
         "A full-stack blogging platform built with React and Firebase, featuring real-time updates, authentication, and content management.",
-      gradient: "from-orange-400 via-orange-500 to-yellow-500",
-      icon: Database,
+      image: "/projects/firebase-blogs.png",
       technologies: [
         "React",
         "Firebase",
@@ -40,8 +40,7 @@ const Projects = () => {
       title: "Redux Project",
       description:
         "A React application demonstrating advanced Redux state management patterns, including async actions and middleware integration.",
-      gradient: "from-purple-400 via-purple-500 to-pink-500",
-      icon: Code,
+      image: "/projects/redux-project.png",
       technologies: ["React", "Redux", "JavaScript", "CSS", "HTML"],
       category: "frontend",
       liveUrl: undefined,
@@ -53,8 +52,7 @@ const Projects = () => {
       title: "React Lesson",
       description:
         "An educational React project showcasing fundamental concepts and best practices in modern React development.",
-      gradient: "from-blue-400 via-blue-500 to-cyan-500",
-      icon: FileCode,
+      image: "/projects/react-lesson.png",
       technologies: ["React", "JavaScript", "CSS", "HTML"],
       category: "frontend",
       liveUrl: undefined,
@@ -66,8 +64,7 @@ const Projects = () => {
       title: "Portfolio Website",
       description:
         "A modern, responsive portfolio website built with Next.js, TypeScript, and Tailwind CSS, featuring dark mode and smooth animations.",
-      gradient: "from-indigo-400 via-indigo-500 to-purple-500",
-      icon: Globe,
+      image: "/projects/portfolio-website.png",
       technologies: [
         "Next.js",
         "TypeScript",
@@ -85,8 +82,7 @@ const Projects = () => {
       title: "Backend API Service",
       description:
         "A scalable REST API built with NestJS and Node.js, featuring authentication, WebSocket support, and MongoDB integration.",
-      gradient: "from-green-400 via-green-500 to-emerald-500",
-      icon: Server,
+      image: "/projects/backend-api-service.png",
       technologies: [
         "NestJS",
         "Node.js",
@@ -105,8 +101,7 @@ const Projects = () => {
       title: "Ali's First Project",
       description:
         "A foundational web development project showcasing HTML, CSS, and JavaScript fundamentals with responsive design.",
-      gradient: "from-pink-400 via-pink-500 to-rose-500",
-      icon: FileCode,
+      image: "/projects/first-web-project.png",
       technologies: ["HTML", "CSS", "JavaScript"],
       category: "frontend",
       liveUrl: undefined,
@@ -183,14 +178,20 @@ const Projects = () => {
             >
               {/* Project image */}
               <div className="relative h-48 overflow-hidden">
-                <div className={`w-full h-full bg-gradient-to-br ${project.gradient} dark:opacity-90 flex items-center justify-center relative`}>
-                  <project.icon className="h-20 w-20 text-white opacity-80 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                <div className="w-full h-full bg-gray-200 dark:bg-dark-700 flex items-center justify-center relative">
+                  <Image 
+                    src={project.image} 
+                    alt={project.title} 
+                    fill 
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" 
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent z-10" />
                 </div>
                 <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300" />
 
                 {/* Overlay buttons */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
                   <div className="flex space-x-4">
                     {project.liveUrl && (
                       <a
