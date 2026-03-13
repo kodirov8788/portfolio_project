@@ -1,133 +1,45 @@
-# Portfolio Website
+# Portfolio Project
 
-A modern, responsive portfolio website built with Next.js, TypeScript, and Tailwind CSS. Features smooth animations, dark mode support, and a clean, professional design.
+Personal portfolio and technical writing platform for presenting production work, case studies, and engineering thinking in a recruiter-friendly format.
 
-## Features
+**Live site:** https://www.muhammadali.pro
 
-- 🎨 **Modern Design** - Clean, professional layout with smooth animations
-- 🌙 **Dark Mode** - Toggle between light and dark themes
-- 📱 **Responsive** - Optimized for all device sizes
-- ⚡ **Fast** - Built with Next.js for optimal performance
-- 🎯 **Accessible** - WCAG compliant with proper ARIA labels
-- 🔧 **TypeScript** - Type-safe development experience
-- 🎭 **Animations** - Smooth transitions using Framer Motion
+## What This Project Shows
+- Production-oriented personal branding with SEO-friendly routing
+- Content-driven pages for projects, writing, and long-form explanations
+- Motion and visual polish without turning the site into a heavy client-side app
 
-## Sections
+## Why This Stack / Tooling
+- **Next.js** was chosen for SSR, clean routing, and strong SEO for portfolio pages that need to be discoverable.
+- **Contentlayer + MDX** make project posts and technical writing maintainable as content, not hard-coded React pages.
+- **Tailwind CSS** keeps iteration fast while preserving a consistent design system.
+- **Framer Motion** is used selectively to improve perceived quality and page transitions without overbuilding animation.
 
-- **Hero** - Introduction with call-to-action buttons
-- **About** - Skills showcase and experience timeline
-- **Projects** - Interactive project gallery with filtering
-- **Contact** - Contact form and social links
+## Stack
+- Next.js 14
+- React 18
+- TypeScript
+- Contentlayer + MDX
+- Tailwind CSS
+- Framer Motion
+
+## Key Features
+- Project showcase pages with structured content
+- MDX-powered technical writing workflow
+- Responsive layout for desktop and mobile
+- Deployable as a fast static/SSR hybrid site
+
+## Project Structure
+- `app/`: route-level UI and page composition
+- `components/`: reusable presentation components
+- `content/`: MDX content for writing and portfolio entries
+- `config/`: navigation and site configuration
 
 ## Getting Started
-
-### Prerequisites
-
-- Node.js 18+
-- npm or yarn
-
-### Installation
-
-1. Clone the repository:
-
-```bash
-git clone <your-repo-url>
-cd portfolio
-```
-
-2. Install dependencies:
-
 ```bash
 npm install
-# or
-yarn install
-```
-
-3. Run the development server:
-
-```bash
 npm run dev
-# or
-yarn dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-## Customization
-
-### Personal Information
-
-Update the following files with your information:
-
-1. **Header.tsx** - Update social media links and contact information
-2. **Hero.tsx** - Change name, title, and description
-3. **About.tsx** - Update skills, experience, and personal values
-4. **Projects.tsx** - Replace with your actual projects
-5. **Contact.tsx** - Update contact details and social links
-6. **layout.tsx** - Update metadata (title, description, etc.)
-
-### Styling
-
-The project uses Tailwind CSS for styling. You can customize:
-
-- Colors in `tailwind.config.js`
-- Global styles in `app/globals.css`
-- Component-specific styles in individual component files
-
-### Adding Projects
-
-To add your projects, update the `projects` array in `components/Projects.tsx`:
-
-```typescript
-const projects = [
-  {
-    id: 1,
-    title: "Your Project Name",
-    description: "Project description",
-    image: "/path/to/image.jpg",
-    technologies: ["React", "TypeScript", "Tailwind"],
-    category: "fullstack", // or 'frontend', 'backend', 'mobile'
-    liveUrl: "https://your-project.com",
-    githubUrl: "https://github.com/kodirov8788/project",
-    featured: true, // or false
-  },
-];
-```
-
-## Deployment
-
-### Vercel (Recommended)
-
-1. Push your code to GitHub
-2. Connect your repository to Vercel
-3. Deploy automatically
-
-### Other Platforms
-
-The project can be deployed to any platform that supports Next.js:
-
-- Netlify
-- AWS Amplify
-- Railway
-- DigitalOcean App Platform
-
-## Technologies Used
-
-- **Next.js 14** - React framework
-- **TypeScript** - Type safety
-- **Tailwind CSS** - Styling
-- **Framer Motion** - Animations
-- **Lucide React** - Icons
-- **React Intersection Observer** - Scroll animations
-
-## License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## Support
-
-If you have any questions or need help customizing the portfolio, please open an issue on GitHub.
+## Why It Matters For Hiring
+This repository is the front door for the rest of the portfolio. It is designed to explain not only what was built, but also how engineering decisions are communicated to recruiters, hiring managers, and technical peers.
