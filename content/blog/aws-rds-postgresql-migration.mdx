@@ -1,0 +1,34 @@
+---
+title: "Case Study: Saving \$3,456/year by Upgrading AWS RDS PostgreSQL"
+date: "2026-04-20"
+summary: "How a standard feature request led to an infrastructure audit that eliminated unnecessary AWS Extended Support fees through a PostgreSQL 16 migration."
+tags: ["AWS", "PostgreSQL", "CloudOptimization", "Security", "RDS"]
+---
+
+## 🔍 The Discovery
+While onboarding a new client for a standard feature request (adding an email update flow), I performed a routine audit of their AWS billing dashboard 🛡️. 
+
+I discovered two PostgreSQL instances incurring **"Extended Support"** fees totaling **\$288/month** (\$3,456/year). The systems were running on PostgreSQL 13.20, which had reached its end of standard support on AWS, triggering a convenience tax for legacy maintenance.
+
+![AWS Migration Infographic](/blog/aws-rds-postgresql-migration.png)
+
+## 🚧 The Challenge
+Upgrading wasn't just a click of a button. The existing application code used a legacy connection pattern that did not enforce SSL.
+- **PostgreSQL 16.3** requires modernized security protocols.
+- Integrating a new DB version without code-level SSL support would have caused a 500-error production outage.
+
+## 🛠 The Implementation
+1. **Full System Backup**: Created snapshots of the RDS instances and application state.
+2. **Code Hardening**: Refactored the database connection logic in the `.env` and connection strings to support and require SSL.
+3. **Migration**: Executed the RDS upgrade from PostgreSQL 13.20 to 16.3 during a scheduled maintenance window.
+4. **Validation**: Performed post-migration smoke tests to ensure the "Email Update" feature and existing flows worked perfectly under the new version.
+
+## 🚀 The Result
+- ✅ **Cost Reduction**: Monthly AWS bill dropped by \$288 immediately.
+- ✅ **Security**: Transitioned to enforced SSL connections, meeting modern security standards.
+- ✅ **Future-Proofing**: The client is now on the latest stable version with years of standard support ahead.
+
+## 🎓 Senior Engineering Lesson
+Seniority is about looking **sideways**. If you only look at the tickets in your sprint, you miss the architectural leaks that cost your client thousands of dollars. Always audit the environment you're building in.
+
+#AWS #PostgreSQL #CloudControl #FractionalCTO #EngineeringManagement
