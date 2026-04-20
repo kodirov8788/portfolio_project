@@ -2,10 +2,10 @@ import { Heart, Github, Linkedin, Mail, Terminal } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="relative py-12 overflow-hidden" style={{ background: '#060609', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
+    <footer className="relative py-12 overflow-hidden bg-transparent border-t border-black/5 dark:border-white/5 transition-colors duration-300">
       {/* Glow accent */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[400px] h-[100px] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse, rgba(124,58,237,0.12) 0%, transparent 70%)', filter: 'blur(20px)' }} />
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[400px] h-[100px] pointer-events-none opacity-20"
+        style={{ background: 'radial-gradient(ellipse, #7c3aed 0%, transparent 70%)', filter: 'blur(20px)' }} />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">

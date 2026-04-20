@@ -16,7 +16,7 @@ export default function BlogSection() {
   });
 
   return (
-    <section id="blog" className="py-24 bg-white dark:bg-[#0a0a0f] transition-colors duration-300">
+    <section id="blog" className="py-24 bg-transparent transition-colors duration-300">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8" ref={ref}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}

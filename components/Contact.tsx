@@ -46,7 +46,7 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="py-24 bg-white dark:bg-[#0a0a0f] transition-colors duration-300">
+    <section id="contact" className="py-24 bg-transparent transition-colors duration-300 relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           ref={ref}

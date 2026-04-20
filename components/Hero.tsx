@@ -123,14 +123,6 @@ const AuroraBg = () => (
         filter: "blur(80px)",
       }}
     />
-    {/* Dot grid */}
-    <div
-      className="absolute inset-0 opacity-[0.05] dark:opacity-[0.025]"
-      style={{
-        backgroundImage: `radial-gradient(circle, currentColor 1px, transparent 1px)`,
-        backgroundSize: "40px 40px",
-      }}
-    />
   </div>
 );
 
@@ -197,7 +189,7 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-[#0a0a0f] transition-colors duration-300"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-transparent transition-colors duration-300"
     >
       <ParticlesBg />
       <AuroraBg />

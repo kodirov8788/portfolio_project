@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
+import Background from "@/components/Background";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { siteConfig } from "@/config/site";
 
@@ -81,9 +82,10 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} bg-white dark:bg-[#0a0a0f] transition-colors duration-300`}>
         <ThemeProvider defaultTheme="dark" storageKey="portfolio-theme">
-          <div className="flex min-h-screen w-full overflow-hidden bg-white dark:bg-[#0a0a0f]">
+          <div className="relative flex min-h-screen w-full overflow-hidden bg-white dark:bg-[#0a0a0f]">
+            <Background />
             <Sidebar />
-            <main className="flex-1 w-full min-w-0 md:ml-80 bg-white dark:bg-[#0a0a0f]">{children}</main>
+            <main className="relative z-10 flex-1 w-full min-w-0 md:ml-80 bg-white/50 dark:bg-transparent backdrop-blur-[2px]">{children}</main>
           </div>
         </ThemeProvider>
       </body>

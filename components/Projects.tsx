@@ -134,7 +134,7 @@ const Projects = () => {
       : projects.filter((project) => project.category === filter);
 
   return (
-    <section id="projects" className="py-24 bg-gray-50/50 dark:bg-[#060609] transition-colors duration-300">
+    <section id="projects" className="py-24 relative overflow-hidden bg-transparent transition-colors duration-300">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           ref={ref}
