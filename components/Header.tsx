@@ -71,7 +71,7 @@ const Header = () => {
               <Github className="h-5 w-5" />
             </a>
             <a
-              href="https://linkedin.com/in/kodirov8788"
+              href="https://www.linkedin.com/in/mukhammadalikodirov/"
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 text-dark-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200"
@@ -138,7 +138,7 @@ const Header = () => {
                     <Github className="h-5 w-5" />
                   </a>
                   <a
-                    href="https://linkedin.com/in/kodirov8788"
+                    href="https://www.linkedin.com/in/mukhammadalikodirov/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="p-2 text-dark-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200"

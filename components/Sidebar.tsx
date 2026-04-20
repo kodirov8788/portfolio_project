@@ -41,10 +41,10 @@ const Sidebar = () => {
     const isActive = activeSection === item.id;
 
     const content = (
-      <div className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
-        isActive
-          ? "bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 shadow-md"
-          : "text-dark-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-dark-700 hover:text-primary-600 dark:hover:text-primary-400"
+      <div className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 border ${
+        isActive 
+          ? "bg-primary-500/15 border-primary-500/30 text-primary-600 dark:text-primary-300" 
+          : "text-gray-500 dark:text-gray-400 border-transparent hover:bg-gray-100 dark:hover:bg-white/5 hover:text-gray-800 dark:hover:text-gray-200"
       }`}>
         <item.icon className="h-5 w-5" />
         <span className="font-medium">{item.name}</span>
@@ -156,34 +156,28 @@ const Sidebar = () => {
       {/* Mobile menu button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed top-4 left-4 z-50 p-3 bg-white dark:bg-dark-800 rounded-lg shadow-lg md:hidden"
+        className="fixed top-4 left-4 z-50 p-3 rounded-lg md:hidden text-gray-600 dark:text-gray-300 bg-white/90 dark:bg-dark-900/90 backdrop-blur-md border border-black/10 dark:border-white/20 shadow-lg"
         aria-label="Toggle menu"
       >
         {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
       </button>
 
       {/* Desktop Sidebar */}
-      <aside className="hidden md:fixed md:top-0 md:left-0 md:flex flex-col w-80 h-screen bg-white dark:bg-dark-800 shadow-lg border-r border-gray-200 dark:border-dark-700 z-30">
+      <aside className="hidden md:fixed md:top-0 md:left-0 md:flex flex-col w-80 h-screen z-30 bg-white dark:bg-[#0a0a0f] backdrop-blur-2xl border-r border-black/5 dark:border-white/5 transition-colors duration-300">
         <div className="flex flex-col h-full p-6">
           {/* Logo */}
           <div className="flex items-center space-x-3 mb-12">
-            <div className="p-2 bg-primary-100 dark:bg-primary-900 rounded-lg">
-              <img
-                src="/logo.png"
-                alt={`${siteConfig.name} Logo`}
-                className="h-8 w-8"
-              />
+            <div className="p-2 rounded-lg bg-primary-500/10 border border-primary-500/30 dark:bg-primary-500/15 dark:border-primary-500/40">
+              <img src="/logo.png" alt={`${siteConfig.name} Logo`} className="h-8 w-8" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-dark-900 dark:text-white">
-                {siteConfig.name}
-              </h1>
+              <h1 className="text-lg font-bold gradient-text font-mono">{siteConfig.name}</h1>
             </div>
           </div>
 
           {/* Navigation */}
           <nav className="flex-1">
-            <ul className="space-y-2">
+            <ul className="space-y-1">
               {navItems.map((item) => (
                 <li key={item.id}>
                   <NavLink item={item} />
@@ -192,88 +186,47 @@ const Sidebar = () => {
             </ul>
           </nav>
 
-          {/* Theme toggle and social links */}
-          <div className="space-y-4">
-            <div className="p-4 bg-gray-50 dark:bg-dark-700 rounded-lg">
+          {/* Theme toggle + social */}
+          <div className="space-y-3">
+            <div className="p-3 rounded-xl bg-gray-50 dark:bg-white/5 border border-black/5 dark:border-white/10">
               <div className="flex items-center justify-between mb-3">
-                <span className="text-sm font-medium text-dark-700 dark:text-gray-300">
-                  Theme
-                </span>
-                <button
-                  onClick={toggleTheme}
-                  className="p-2 rounded-lg bg-white dark:bg-dark-600 shadow-sm hover:shadow-md transition-shadow duration-200"
-                  aria-label="Toggle theme"
-                >
-                  {resolvedTheme === "dark" ? (
-                    <Sun className="h-4 w-4 text-yellow-500" />
-                  ) : (
-                    <Moon className="h-4 w-4 text-blue-600" />
-                  )}
+                <span className="text-[10px] font-mono text-gray-400 dark:text-gray-500 uppercase tracking-widest">Theme</span>
+                <button onClick={toggleTheme} className="p-1.5 rounded-lg text-gray-500 dark:text-gray-400 hover:text-primary-500 dark:hover:text-primary-400 hover:bg-white dark:hover:bg-white/10 transition-all border border-transparent hover:border-black/5 dark:hover:border-white/10"
+                   aria-label="Toggle theme">
+                  {resolvedTheme === "dark" ? <Sun className="h-4 w-4 text-yellow-500" /> : <Moon className="h-4 w-4 text-primary-500" />}
                 </button>
               </div>
-
-              {/* Theme options */}
-              <div className="flex space-x-1">
-                <button
-                  onClick={() => setTheme("light")}
-                  className={`flex-1 px-3 py-2 text-xs rounded-md transition-colors duration-200 ${
-                    theme === "light"
-                      ? "bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300"
-                      : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-dark-600"
-                  }`}
-                >
-                  Light
-                </button>
-                <button
-                  onClick={() => setTheme("dark")}
-                  className={`flex-1 px-3 py-2 text-xs rounded-md transition-colors duration-200 ${
-                    theme === "dark"
-                      ? "bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300"
-                      : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-dark-600"
-                  }`}
-                >
-                  Dark
-                </button>
-                <button
-                  onClick={() => setTheme("system")}
-                  className={`flex-1 px-3 py-2 text-xs rounded-md transition-colors duration-200 ${
-                    theme === "system"
-                      ? "bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300"
-                      : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-dark-600"
-                  }`}
-                >
-                  <Monitor className="h-3 w-3 mx-auto" />
-                </button>
+              <div className="flex gap-1">
+                {(['light','dark','system'] as const).map((t) => (
+                  <button key={t} onClick={() => setTheme(t)}
+                    className={`flex-1 px-2 py-1.5 text-[10px] rounded-md transition-all duration-200 font-mono border ${
+                      theme === t
+                        ? "bg-primary-500/20 text-primary-600 dark:text-primary-300 border-primary-500/30"
+                        : "text-gray-500 dark:text-gray-400 border-transparent hover:bg-gray-100 dark:hover:bg-white/5"
+                    }`}>
+                    {t === 'system' ? <Monitor className="h-3 w-3 mx-auto" /> : t}
+                  </button>
+                ))}
               </div>
             </div>
 
-            {/* Social links */}
-            <div className="flex space-x-3">
-              <button
-                onClick={() => scrollToSection("contact")}
-                className="p-3 bg-gray-100 dark:bg-dark-700 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900 transition-colors duration-200"
-                aria-label="Contact"
-              >
-                <Mail className="h-5 w-5 text-dark-600 dark:text-gray-300" />
-              </button>
-              <a
-                href={siteConfig.links.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 bg-gray-100 dark:bg-dark-700 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900 transition-colors duration-200"
-                aria-label="GitHub"
-              >
-                <Github className="h-5 w-5 text-dark-600 dark:text-gray-300" />
-              </a>
-              <a
-                href={siteConfig.links.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 bg-gray-100 dark:bg-dark-700 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900 transition-colors duration-200"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="h-5 w-5 text-dark-600 dark:text-gray-300" />
-              </a>
+            <div className="flex gap-2">
+              {[
+                { onClick: () => scrollToSection("contact"), icon: Mail, label: "Contact" },
+                { href: siteConfig.links.github,   icon: Github,   label: "GitHub" },
+                { href: siteConfig.links.linkedin, icon: Linkedin, label: "LinkedIn" },
+              ].map((item) => {
+                const cls = "flex-1 flex items-center justify-center p-2.5 rounded-xl text-gray-500 hover:text-primary-500 dark:text-gray-400 dark:hover:text-primary-400 transition-all duration-200 bg-gray-50 dark:bg-white/5 border border-black/5 dark:border-white/10 hover:border-primary-500/30";
+                return 'href' in item ? (
+                  <a key={item.label} href={(item as any).href} target="_blank" rel="noopener noreferrer" className={cls} aria-label={item.label}>
+                    <item.icon className="h-4 w-4" />
+                  </a>
+                ) : (
+                  <button key={item.label} onClick={(item as any).onClick} className={cls} aria-label={item.label}>
+                    <item.icon className="h-4 w-4" />
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -298,120 +251,60 @@ const Sidebar = () => {
         initial={{ x: "-100%" }}
         animate={{ x: isOpen ? 0 : "-100%" }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        className="fixed left-0 top-0 h-full w-80 bg-white dark:bg-dark-800 shadow-2xl z-40 md:hidden overflow-y-auto pb-10"
+        className="fixed left-0 top-0 h-full w-80 z-40 md:hidden overflow-y-auto pb-10 bg-white dark:bg-[#0a0a0f] border-r border-black/10 dark:border-white/20 shadow-2xl"
       >
         <div className="flex flex-col h-full p-6">
           {/* Logo */}
-          <div className="flex items-center space-x-3 mb-12">
-            <div className="p-2 bg-primary-100 dark:bg-primary-900 rounded-lg">
-              <img
-                src="/logo.png"
-                alt={`${siteConfig.name} Logo`}
-                className="h-8 w-8"
-              />
+          <div className="flex items-center space-x-3 mb-10">
+            <div className="p-2 rounded-lg" style={{ background: 'rgba(124,58,237,0.15)', border: '1px solid rgba(124,58,237,0.3)' }}>
+              <img src="/logo.png" alt={`${siteConfig.name} Logo`} className="h-8 w-8" />
             </div>
-            <div>
-              <h1 className="text-xl font-bold text-dark-900 dark:text-white">
-                {siteConfig.name}
-              </h1>
-            </div>
+            <h1 className="text-lg font-bold gradient-text font-mono">{siteConfig.name}</h1>
           </div>
 
           {/* Navigation */}
           <nav className="flex-1">
-            <ul className="space-y-2">
+            <ul className="space-y-1">
               {navItems.map((item) => (
-                <li key={item.id}>
-                  <NavLink item={item} />
-                </li>
+                <li key={item.id}><NavLink item={item} /></li>
               ))}
             </ul>
           </nav>
 
-          {/* Theme toggle and social links */}
-          <div className="space-y-4">
-            <div className="p-4 bg-gray-50 dark:bg-dark-700 rounded-lg">
+          {/* Theme + social */}
+          <div className="space-y-3">
+            <div className="p-3 rounded-xl bg-gray-50 dark:bg-white/5 border border-black/5 dark:border-white/10">
               <div className="flex items-center justify-between mb-3">
-                <span className="text-sm font-medium text-dark-700 dark:text-gray-300">
-                  Theme
-                </span>
-                <button
-                  onClick={toggleTheme}
-                  className="p-2 rounded-lg bg-white dark:bg-dark-600 shadow-sm hover:shadow-md transition-shadow duration-200"
-                  aria-label="Toggle theme"
-                >
-                  {resolvedTheme === "dark" ? (
-                    <Sun className="h-4 w-4 text-yellow-500" />
-                  ) : (
-                    <Moon className="h-4 w-4 text-blue-600" />
-                  )}
+                <span className="text-[10px] font-mono text-gray-400 dark:text-gray-500 uppercase tracking-widest">Theme</span>
+                <button onClick={toggleTheme} className="p-1.5 rounded-lg text-gray-500 dark:text-gray-400 transition-colors bg-white/50 dark:bg-white/5 border border-black/5 dark:border-white/10" aria-label="Toggle theme">
+                  {resolvedTheme === "dark" ? <Sun className="h-4 w-4 text-yellow-500" /> : <Moon className="h-4 w-4 text-primary-500" />}
                 </button>
               </div>
-
-              {/* Theme options */}
-              <div className="flex space-x-1">
-                <button
-                  onClick={() => setTheme("light")}
-                  className={`flex-1 px-3 py-2 text-xs rounded-md transition-colors duration-200 ${
-                    theme === "light"
-                      ? "bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300"
-                      : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-dark-600"
-                  }`}
-                >
-                  Light
-                </button>
-                <button
-                  onClick={() => setTheme("dark")}
-                  className={`flex-1 px-3 py-2 text-xs rounded-md transition-colors duration-200 ${
-                    theme === "dark"
-                      ? "bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300"
-                      : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-dark-600"
-                  }`}
-                >
-                  Dark
-                </button>
-                <button
-                  onClick={() => setTheme("system")}
-                  className={`flex-1 px-3 py-2 text-xs rounded-md transition-colors duration-200 ${
-                    theme === "system"
-                      ? "bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300"
-                      : "text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-dark-600"
-                  }`}
-                >
-                  <Monitor className="h-3 w-3 mx-auto" />
-                </button>
+              <div className="flex gap-1">
+                {(['light','dark','system'] as const).map((t) => (
+                  <button key={t} onClick={() => setTheme(t)}
+                    className={`flex-1 px-2 py-1.5 text-[10px] rounded-md transition-all font-mono border ${
+                      theme === t
+                        ? "bg-primary-500/20 text-primary-600 dark:text-primary-300 border-primary-500/30"
+                        : "text-gray-500 dark:text-gray-400 border-transparent hover:bg-gray-100 dark:hover:bg-white/5"
+                    }`}>
+                    {t === 'system' ? <Monitor className="h-3 w-3 mx-auto" /> : t}
+                  </button>
+                ))}
               </div>
             </div>
-
-            {/* Social links */}
-            <div className="flex space-x-3">
-              <button
-                onClick={() => {
-                  scrollToSection("contact");
-                  setIsOpen(false);
-                }}
-                className="p-3 bg-gray-100 dark:bg-dark-700 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900 transition-colors duration-200"
-                aria-label="Contact"
-              >
-                <Mail className="h-5 w-5 text-dark-600 dark:text-gray-300" />
+            <div className="flex gap-2">
+              <button onClick={() => { scrollToSection("contact"); setIsOpen(false); }}
+                className="flex-1 flex items-center justify-center p-2.5 rounded-xl text-gray-500 dark:text-gray-400 transition-all bg-gray-50 dark:bg-white/5 border border-black/5 dark:border-white/10" aria-label="Contact">
+                <Mail className="h-4 w-4" />
               </button>
-              <a
-                href={siteConfig.links.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 bg-gray-100 dark:bg-dark-700 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900 transition-colors duration-200"
-                aria-label="GitHub"
-              >
-                <Github className="h-5 w-5 text-dark-600 dark:text-gray-300" />
+              <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer"
+                className="flex-1 flex items-center justify-center p-2.5 rounded-xl text-gray-500 dark:text-gray-400 transition-all bg-gray-50 dark:bg-white/5 border border-black/5 dark:border-white/10" aria-label="GitHub">
+                <Github className="h-4 w-4" />
               </a>
-              <a
-                href={siteConfig.links.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 bg-gray-100 dark:bg-dark-700 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900 transition-colors duration-200"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="h-5 w-5 text-dark-600 dark:text-gray-300" />
+              <a href={siteConfig.links.linkedin} target="_blank" rel="noopener noreferrer"
+                className="flex-1 flex items-center justify-center p-2.5 rounded-xl text-gray-500 dark:text-gray-400 transition-all bg-gray-50 dark:bg-white/5 border border-black/5 dark:border-white/10" aria-label="LinkedIn">
+                <Linkedin className="h-4 w-4" />
               </a>
             </div>
           </div>

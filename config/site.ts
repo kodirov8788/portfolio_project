@@ -5,7 +5,7 @@ export const siteConfig = {
   url: "https://www.muhammadali.pro",
   links: {
     github: "https://github.com/kodirov8788",
-    linkedin: "https://www.linkedin.com/in/kodirov-dev/",
+    linkedin: "https://www.linkedin.com/in/mukhammadalikodirov/",
     email: "mailto:kodirovev@gmail.com", // Assuming based on user profile or just an example
   },
   navItems: [

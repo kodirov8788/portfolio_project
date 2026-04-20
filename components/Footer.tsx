@@ -1,23 +1,51 @@
-import { Code, Heart } from "lucide-react";
+import { Heart, Github, Linkedin, Mail, Terminal } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="bg-dark-900 text-white py-12">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row items-center justify-between">
-          <div className="flex items-center space-x-2 mb-4 md:mb-0">
-            <img src="/logo.png" alt="Code & Coffee Logo" className="h-6 w-6" />
-            <span className="text-lg font-semibold">Code & Coffee</span>
+    <footer className="relative py-12 overflow-hidden" style={{ background: '#060609', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
+      {/* Glow accent */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[400px] h-[100px] pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse, rgba(124,58,237,0.12) 0%, transparent 70%)', filter: 'blur(20px)' }} />
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+
+          {/* Brand */}
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-lg" style={{ background: 'rgba(124,58,237,0.15)', border: '1px solid rgba(124,58,237,0.3)' }}>
+              <Terminal className="h-5 w-5 text-primary-400" />
+            </div>
+            <span className="text-lg font-semibold gradient-text font-mono">Code &amp; Coffee</span>
           </div>
 
+          {/* Social icons */}
+          <div className="flex items-center gap-3">
+            {[
+              { href: "https://github.com/kodirov8788", icon: Github,   label: "GitHub" },
+              { href: "https://www.linkedin.com/in/mukhammadalikodirov/", icon: Linkedin, label: "LinkedIn" },
+              { href: "mailto:kodirov8788@gmail.com", icon: Mail,    label: "Email" },
+            ].map(({ href, icon: Icon, label }) => (
+              <a
+                key={label}
+                href={href}
+                target={href.startsWith("mailto") ? undefined : "_blank"}
+                rel="noopener noreferrer"
+                aria-label={label}
+                className="p-2.5 rounded-lg text-gray-400 hover:text-primary-400 transition-all duration-200 hover:scale-110"
+                style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}
+              >
+                <Icon className="h-4 w-4" />
+              </a>
+            ))}
+          </div>
+
+          {/* Copyright */}
           <div className="text-center md:text-right">
-            <p className="text-gray-400 mb-2">
-              Made with <Heart className="inline h-4 w-4 text-red-500" /> using
-              Next.js & Tailwind CSS
+            <p className="text-gray-500 text-sm mb-1">
+              Made with <Heart className="inline h-3 w-3 text-red-500" /> using Next.js &amp; Tailwind
             </p>
-            <p className="text-sm text-gray-500">
-              © {new Date().getFullYear()} Mukhammadali Kodirov. All rights
-              reserved.
+            <p className="text-xs text-gray-600 font-mono">
+              © {new Date().getFullYear()} Mukhammadali Kodirov
             </p>
           </div>
         </div>

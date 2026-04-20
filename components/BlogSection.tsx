@@ -16,7 +16,7 @@ export default function BlogSection() {
   });
 
   return (
-    <section id="blog" className="py-20 bg-gray-50 dark:bg-dark-800 border-t border-gray-200 dark:border-dark-700">
+    <section id="blog" className="py-24 bg-white dark:bg-[#0a0a0f] transition-colors duration-300">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8" ref={ref}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -24,10 +24,10 @@ export default function BlogSection() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white">
             Engineering <span className="gradient-text">Insights</span>
           </h2>
-          <p className="text-xl text-dark-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
             Deep dives into backend architecture, AWS cost optimization, and technical leadership.
           </p>
         </motion.div>
@@ -39,10 +39,10 @@ export default function BlogSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-              className="group relative flex flex-col md:flex-row gap-8 p-6 md:p-8 rounded-2xl bg-white dark:bg-dark-900 shadow-sm hover:shadow-xl transition-all duration-300"
+              className="group relative flex flex-col md:flex-row gap-8 p-6 md:p-8 rounded-3xl bg-gray-50 dark:bg-white/[0.03] border border-black/5 dark:border-white/10 hover:border-primary-500/30 transition-all duration-300 shadow-sm hover:shadow-xl"
             >
               <div className="flex-1">
-                <div className="flex flex-wrap items-center gap-4 text-sm text-dark-500 dark:text-gray-400 mb-4">
+                <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-4">
                   <span className="flex items-center gap-1.5">
                     <Calendar className="h-4 w-4 text-primary-500" />
                     {format(parseISO(post.date), 'MMMM d, yyyy')}
@@ -59,13 +59,13 @@ export default function BlogSection() {
                   )}
                 </div>
 
-                <h3 className="text-2xl font-bold text-dark-900 dark:text-white mb-3 group-hover:text-primary-600 transition-colors">
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
                   <Link href={post.url}>
                     {post.title}
                   </Link>
                 </h3>
                 
-                <p className="text-dark-600 dark:text-gray-400 mb-6 line-clamp-2 leading-relaxed">
+                <p className="text-gray-600 dark:text-gray-400 mb-6 line-clamp-2 leading-relaxed">
                   {post.summary}
                 </p>
 
@@ -78,7 +78,7 @@ export default function BlogSection() {
               </div>
               
               {post.image && (
-                <div className="w-full md:w-64 h-48 md:h-auto rounded-xl overflow-hidden bg-gray-100 dark:bg-dark-800 flex-shrink-0 mt-4 md:mt-0">
+                <div className="w-full md:w-64 h-48 md:h-auto rounded-2xl overflow-hidden bg-gray-200 dark:bg-white/10 flex-shrink-0 mt-4 md:mt-0">
                   <img 
                     src={post.image} 
                     alt={post.title}

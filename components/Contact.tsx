@@ -40,13 +40,13 @@ const Contact = () => {
     {
       icon: Linkedin,
       name: "LinkedIn",
-      href: "https://www.linkedin.com/in/kodirov-dev/",
+      href: "https://www.linkedin.com/in/mukhammadalikodirov/",
       color: "hover:text-blue-600",
     },
   ];
 
   return (
-    <section id="contact" className="py-20 bg-white dark:bg-dark-900">
+    <section id="contact" className="py-24 bg-white dark:bg-[#0a0a0f] transition-colors duration-300">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           ref={ref}
@@ -58,8 +58,8 @@ const Contact = () => {
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             <span className="gradient-text">Get In Touch</span>
           </h2>
-          <p className="text-xl text-dark-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Have a project in mind or want to collaborate? I'd love to hear from
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            Have a project in mind or want to collaborate? I&apos;d love to hear from
             you!
           </p>
         </motion.div>
@@ -71,44 +71,44 @@ const Contact = () => {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <h3 className="text-3xl font-bold mb-8 text-center text-dark-900 dark:text-white">
-              Let's Connect
+            <h3 className="text-3xl font-bold mb-8 text-center text-gray-900 dark:text-white">
+              Let&apos;s Connect
             </h3>
-            <p className="text-lg text-dark-600 dark:text-gray-300 mb-8 text-center leading-relaxed">
-              I'm always interested in new opportunities and exciting projects.
-              Whether you have a question or just want to say hi, I'll try my
+            <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 text-center leading-relaxed">
+              I&apos;m always interested in new opportunities and exciting projects.
+              Whether you have a question or just want to say hi, I&apos;ll try my
               best to get back to you!
             </p>
 
             {/* Contact details */}
             <div className="space-y-6 mb-8">
               {contactInfo.map((info, index) => (
-                <motion.a
-                  key={info.title}
-                  href={info.href}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
-                  className="flex items-center space-x-4 p-4 bg-white dark:bg-dark-700 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 group"
-                >
-                  <div className="p-3 bg-primary-100 dark:bg-primary-900 rounded-lg group-hover:bg-primary-200 dark:group-hover:bg-primary-800 transition-colors duration-200">
-                    <info.icon className="h-6 w-6 text-primary-600" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-dark-900 dark:text-white">
-                      {info.title}
-                    </h4>
-                    <p className="text-dark-600 dark:text-gray-300">
-                      {info.value}
-                    </p>
-                  </div>
-                </motion.a>
+                  <motion.a
+                    key={info.title}
+                    href={info.href}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={inView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
+                    className="flex items-center space-x-4 p-5 bg-gray-50 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/10 hover:border-primary-500/30 transition-all duration-300 group shadow-sm hover:shadow-xl"
+                  >
+                    <div className="p-3 bg-primary-500/10 dark:bg-primary-500/20 rounded-xl group-hover:bg-primary-500/20 dark:group-hover:bg-primary-500/30 transition-colors duration-200">
+                      <info.icon className="h-6 w-6 text-primary-600 dark:text-primary-400" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-gray-900 dark:text-white">
+                        {info.title}
+                      </h4>
+                      <p className="text-gray-600 dark:text-gray-400">
+                        {info.value}
+                      </p>
+                    </div>
+                  </motion.a>
               ))}
             </div>
 
             {/* Social links */}
             <div className="text-center">
-              <h4 className="text-lg font-semibold mb-4 text-dark-900 dark:text-white">
+              <h4 className="text-lg font-semibold mb-6 text-gray-900 dark:text-white">
                 Follow Me
               </h4>
               <div className="flex justify-center space-x-4">
@@ -121,7 +121,7 @@ const Contact = () => {
                     initial={{ opacity: 0, scale: 0 }}
                     animate={inView ? { opacity: 1, scale: 1 } : {}}
                     transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
-                    className={`p-3 bg-white dark:bg-dark-700 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ${social.color}`}
+                    className={`p-4 bg-gray-50 dark:bg-white/5 rounded-2xl border border-black/5 dark:border-white/10 shadow-sm hover:shadow-xl hover:border-primary-500/30 transition-all duration-300 text-gray-400 ${social.color}`}
                     aria-label={social.name}
                   >
                     <social.icon className="h-6 w-6" />

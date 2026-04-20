@@ -62,12 +62,28 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
-      <body className={inter.className}>
-        <ThemeProvider defaultTheme="system" storageKey="portfolio-theme">
-          <div className="flex min-h-screen w-full bg-gray-50 dark:bg-dark-900 overflow-hidden">
+    <html lang="en" className="scroll-smooth dark" suppressHydrationWarning>
+      <head>
+        {/* Prevent white flash — apply theme class before paint */}
+        <script dangerouslySetInnerHTML={{ __html: `
+          (function(){
+            try {
+              var stored = localStorage.getItem('portfolio-theme');
+              var theme = stored || 'dark';
+              var resolved = theme === 'system'
+                ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+                : theme;
+              document.documentElement.classList.remove('light','dark');
+              document.documentElement.classList.add(resolved);
+            } catch(e){}
+          })();
+        `}} />
+      </head>
+      <body className={`${inter.className} bg-white dark:bg-[#0a0a0f] transition-colors duration-300`}>
+        <ThemeProvider defaultTheme="dark" storageKey="portfolio-theme">
+          <div className="flex min-h-screen w-full overflow-hidden bg-white dark:bg-[#0a0a0f]">
             <Sidebar />
-            <main className="flex-1 w-full min-w-0 md:ml-80">{children}</main>
+            <main className="flex-1 w-full min-w-0 md:ml-80 bg-white dark:bg-[#0a0a0f]">{children}</main>
           </div>
         </ThemeProvider>
       </body>
