@@ -29,6 +29,66 @@ const Projects = () => {
   const projects = [
     {
       id: 1,
+      title: "RDS PostgreSQL 16 Migration",
+      description:
+        "Architected a zero-downtime migration from legacy PostgreSQL 13 to 16, eliminating $3,456/year in AWS Extended Support fees for a production environment.",
+      image: "/projects/postgresql-16-migration.png",
+      technologies: ["AWS RDS", "PostgreSQL 16", "Security", "SSL"],
+      category: "backend",
+      liveUrl: "/blog/aws-rds-postgresql-migration",
+      githubUrl: "https://github.com/kodirov8788",
+      featured: true,
+    },
+    {
+      id: 2,
+      title: "AWS Cost Optimization",
+      description:
+        "Reduced monthly AWS expenditure by 30% through automated infrastructure scheduling, strategic instance tiering, and unused resource reclamation.",
+      image: "/projects/aws-optimization.png",
+      technologies: ["AWS", "CloudWatch", "Lambda", "Cost Explorer"],
+      category: "backend",
+      liveUrl: undefined,
+      githubUrl: "https://github.com/kodirov8788",
+      featured: true,
+    },
+    {
+      id: 3,
+      title: "Yetti.jp Strategy",
+      description:
+        "Technical leadership for Japanese market entry, overseeing product strategy, localization infrastructure, and multi-tenant system scalability.",
+      image: "/projects/yetti-jp.png",
+      technologies: ["Next.js", "Lead", "i18n", "Strategy"],
+      category: "fullstack",
+      liveUrl: undefined,
+      githubUrl: "https://github.com/kodirov8788",
+      featured: true,
+    },
+    {
+      id: 4,
+      title: "Local-First Development Era",
+      description:
+        "Engineered a high-performance DevX infrastructure shifting cloud RDS dependencies to containerized local databases, cutting build latency by 60%.",
+      image: "/projects/devx-local-first.png",
+      technologies: ["Docker", "PostgreSQL", "DevOps", "Node.js"],
+      category: "backend",
+      liveUrl: undefined,
+      githubUrl: "https://github.com/kodirov8788",
+      featured: false,
+    },
+    {
+      id: 5,
+      title: "AI Engineering Protocol",
+      description:
+        "Developed a standardized 'Session Handoff' protocol to maintain high-fidelity context between human and AI agents in large-scale codebases.",
+      image: "/projects/ai-protocol.png",
+      technologies: ["AI", "Architecture", "SDLC", "Automation"],
+      category: "fullstack",
+      liveUrl: undefined,
+      githubUrl: "https://github.com/kodirov8788",
+      featured: false,
+    },
+    {
+      id: 6,
       title: "Firebase Blogs",
       description:
         "A full-stack blogging platform built with React and Firebase, featuring real-time updates, authentication, and content management.",
@@ -43,10 +103,10 @@ const Projects = () => {
       category: "fullstack",
       liveUrl: undefined,
       githubUrl: "https://github.com/kodirov8788/firebase-blogs",
-      featured: true,
+      featured: false,
     },
     {
-      id: 2,
+      id: 7,
       title: "Redux Project",
       description:
         "A React application demonstrating advanced Redux state management patterns, including async actions and middleware integration.",
@@ -55,22 +115,10 @@ const Projects = () => {
       category: "frontend",
       liveUrl: undefined,
       githubUrl: "https://github.com/kodirov8788/redux-project",
-      featured: true,
-    },
-    {
-      id: 3,
-      title: "React Lesson",
-      description:
-        "An educational React project showcasing fundamental concepts and best practices in modern React development.",
-      image: "/projects/react-lesson.png",
-      technologies: ["React", "JavaScript", "CSS", "HTML"],
-      category: "frontend",
-      liveUrl: undefined,
-      githubUrl: "https://github.com/kodirov8788/react-lesson",
       featured: false,
     },
     {
-      id: 4,
+      id: 8,
       title: "Portfolio Website",
       description:
         "A modern, responsive portfolio website built with Next.js, TypeScript, and Tailwind CSS, featuring dark mode and smooth animations.",
@@ -88,7 +136,7 @@ const Projects = () => {
       featured: false,
     },
     {
-      id: 5,
+      id: 9,
       title: "Backend API Service",
       description:
         "A scalable REST API built with NestJS and Node.js, featuring authentication, WebSocket support, and MongoDB integration.",
@@ -107,15 +155,15 @@ const Projects = () => {
       featured: false,
     },
     {
-      id: 6,
-      title: "Ali's First Project",
+      id: 10,
+      title: "React Lesson",
       description:
-        "A foundational web development project showcasing HTML, CSS, and JavaScript fundamentals with responsive design.",
-      image: "/projects/first-web-project.png",
-      technologies: ["HTML", "CSS", "JavaScript"],
+        "An educational React project showcasing fundamental concepts and best practices in modern React development.",
+      image: "/projects/react-lesson.png",
+      technologies: ["React", "JavaScript", "CSS", "HTML"],
       category: "frontend",
       liveUrl: undefined,
-      githubUrl: "https://github.com/kodirov8788/Ali-s-first-project",
+      githubUrl: "https://github.com/kodirov8788/react-lesson",
       featured: false,
     },
   ];
